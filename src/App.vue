@@ -7,7 +7,7 @@
       <h1 class="md-title">{{ title_shop }}</h1>
     </md-toolbar> 
 
-    <md-sidenav class="md-left" ref="leftMenu">
+    <md-sidenav class="md-left open" ref="leftMenu">
       <md-toolbar class="md-medium">
         <div class="md-toolbar-container">
           <h3 class="md-title">Menu</h3>
@@ -16,12 +16,19 @@
 
       <md-list class="">
         <md-list-item class="">Perfil</md-list-item>
-        <md-list-item class="">Categorias</md-list-item>
-        <md-list-item class="">Produtos</md-list-item>
+        <md-list-item class="">
+          <router-link to="/categories" v-on:click.native="closeMenu">Categorias</router-link>
+        </md-list-item>
+        <md-list-item class="">
+        <router-link to="/products" v-on:click.native="closeMenu">Produtos</router-link>
+        </md-list-item>
         <md-list-item class="">Sair</md-list-item>
       </md-list>
-
     </md-sidenav>
+
+    <md-row>
+      <router-view></router-view> 
+    </md-row>
 
   </main>
 </template>
@@ -38,7 +45,10 @@
 
     methods: {
       openMenu: function () {
-        alert('ABRIR')
+        this.$refs.leftMenu.toggle();
+      },
+      closeMenu: function() {
+        this.$refs.leftMenu.close();
       }
     }
   }
