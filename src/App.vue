@@ -10,15 +10,15 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">
-            <h1 class="md-title">{{ title_shop }}</h1>
+            {{ title_shop }}
           </a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
+            <li><a href="#/login" v-on:click.native="closeMenu">Login</a></li>
+            <li><a href="#/products" v-on:click.native="closeMenu">Produtos</a></li>
+            <li><a href="#/categories" v-on:click.native="closeMenu">Categorias</a></li>
           </ul>
         </div>
       </div>

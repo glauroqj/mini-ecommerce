@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
-import './assets/css/main.css'
+import './assets/css/template.css'
 import Login from './components/login.vue'
 import Categories from './components/categories.vue'
 import Products from './components/products.vue'

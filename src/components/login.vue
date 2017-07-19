@@ -1,7 +1,7 @@
 <template lang="html">
-	<md-layout>
+	<div>
 		<h2 class="md-title">Login</h2>
-	</md-layout>
+	</div>
 </template>
 
 <script>
