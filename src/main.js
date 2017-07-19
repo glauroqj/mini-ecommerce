@@ -1,30 +1,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.css'
 import App from './App'
+import './assets/css/main.css'
+import Login from './components/login.vue'
 import Categories from './components/categories.vue'
 import Products from './components/products.vue'
 
-Vue.use(VueMaterial)
+
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
 const routes = [ 
+{ path: '/login', component: Login },
 { path: '/products', component: Products }, 
-{ path: '/categories', component: Categories } 
+{ path: '/categories', component: Categories }
 ]
 
 const router = new VueRouter({
 	routes
 });
-
-Vue.material.registerTheme('default', {
-	primary: 'blue',
-	accent: 'light-blue',
-	warn: 'red',
-	background: 'white'
-})
 
 /* eslint-disable no-new */
 new Vue({

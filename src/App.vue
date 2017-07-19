@@ -1,36 +1,35 @@
 <template>
-  <main class="phone-viewport">
-    <md-toolbar>
-      <md-button class="md-icon button" v-on:click.native="openMenu">
-        <md-icon>M</md-icon>
-      </md-button>
-      <h1 class="md-title">{{ title_shop }}</h1>
-    </md-toolbar> 
-
-    <md-sidenav class="md-left open" ref="leftMenu">
-      <md-toolbar class="md-medium">
-        <div class="md-toolbar-container">
-          <h3 class="md-title">Menu</h3>
+  <div>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <h1 class="md-title">{{ title_shop }}</h1>
+          </a>
         </div>
-      </md-toolbar>
 
-      <md-list class="">
-        <md-list-item class="">Perfil</md-list-item>
-        <md-list-item class="">
-          <router-link to="/categories" v-on:click.native="closeMenu">Categorias</router-link>
-        </md-list-item>
-        <md-list-item class="">
-        <router-link to="/products" v-on:click.native="closeMenu">Produtos</router-link>
-        </md-list-item>
-        <md-list-item class="">Sair</md-list-item>
-      </md-list>
-    </md-sidenav>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav> 
 
-    <md-row>
-      <router-view></router-view> 
-    </md-row>
-
-  </main>
+    <div class="container">
+      <div class="row">  
+        <router-view></router-view> 
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -39,10 +38,9 @@
 
     data () {
       return {
-        title_shop: 'Turtle Shop'
+        title_shop: 'Pet Shop'
       }
     },
-
     methods: {
       openMenu: function () {
         this.$refs.leftMenu.toggle();
