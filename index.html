@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>mini-ecommerce</title>
-    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900">
-    <link href="//fonts.googleapis.com/icon?family=Material+Icons">
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>mini-ecommerce</title>
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900">
+  <link href="//fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-messaging.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCSOt2xKXdFqRxHwExHp4LWBGbDYVGj9h0",
+    authDomain: "petshop-3ec0d.firebaseapp.com",
+    databaseURL: "https://petshop-3ec0d.firebaseio.com",
+    projectId: "petshop-3ec0d",
+    storageBucket: "petshop-3ec0d.appspot.com",
+    messagingSenderId: "847238548600"
+  };
+  firebase.initializeApp(config);
+</script>
 </html>
