@@ -1,16 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueFire from 'vuefire'
+import './firebase.js'
 import App from './App'
 import './assets/css/template.css'
+import Home from './components/home.vue'
 import Login from './components/login.vue'
 import Categories from './components/categories.vue'
 import Products from './components/products.vue'
 
 
 Vue.use(VueRouter)
+Vue.use(VueFire)
 Vue.config.productionTip = false
 
 const routes = [ 
+{ path: '/', component: Home },
 { path: '/login', component: Login },
 { path: '/products', component: Products }, 
 { path: '/categories', component: Categories }
