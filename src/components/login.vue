@@ -17,7 +17,7 @@
 							<label for="exampleInputPassword1">Password</label>
 							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
 						</div>
-						<button type="submit" class="btn btn-success" v-on:click="sendLogin()">Submit</button>
+						<button type="button" class="btn btn-success" v-on:click="sendLogin()">Submit</button>
 					</form>
 				</div>
 			</div>
@@ -59,11 +59,14 @@
 		methods: {
 			sendLogin: function() {
 				var vm = this;
-				console.log(vm.email, vm.password)
 				Firebase.auth().signInWithEmailAndPassword(vm.email, vm.password).catch(function(error) {
+					if ( !error.code ) {
+
+					} else {
+						vm.$toasted.show('Login/Senha inválidos! :(')
+					}
 					var errorCode = error.code;
 					var errorMessage = error.message;
-					console.log('Erro Code: '+error.code+' Erro Msg: '+error.message)
 				});
 			}
 		}

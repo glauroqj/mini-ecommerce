@@ -64,7 +64,8 @@
 					this.name = this.user.displayName; 
 					this.email = this.user.email; 
 					this.photo = this.user.photoURL; 
-					this.userId = this.user.uid; 
+					this.userId = this.user.uid;
+					this.$toasted.show('Bem-Vindo '+ this.name);
 				} 
 			},
 			logout: function() {
