@@ -1,13 +1,17 @@
 import Vue from 'vue'
+import App from './App'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
-import './firebase.js'
-import App from './App'
+import Firebase from 'firebase'
+import {config} from './firebase.js'
+
 import './assets/css/template.css'
-import Home from './components/home.vue'
+import './assets/css/template.css'
+import './assets/js/jquery.min.js'
+import './assets/js/bootstrap.min.js'
+
 import Login from './components/login.vue'
-import Categories from './components/categories.vue'
-import Products from './components/products.vue'
+import AuthSuccess from './components/authSuccess.vue';
 
 
 Vue.use(VueRouter)
@@ -15,10 +19,8 @@ Vue.use(VueFire)
 Vue.config.productionTip = false
 
 const routes = [ 
-{ path: '/', component: Home },
-{ path: '/login', component: Login },
-{ path: '/products', component: Products }, 
-{ path: '/categories', component: Categories }
+{ path: '/', component: Login },
+{ path: '/success', component: AuthSuccess }
 ]
 
 const router = new VueRouter({
@@ -28,5 +30,15 @@ const router = new VueRouter({
 /* eslint-disable no-new */
 new Vue({
 	router,
+	created() {
+		Firebase.initializeApp(config);
+		Firebase.auth().onAuthStateChanged((user) => {
+			if(user) {
+				this.$router.push('/success')
+			} else {
+				this.$router.push('/')
+			}
+		});
+	},
 	render: h => h(App)
 }).$mount('#app')

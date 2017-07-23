@@ -1,15 +1,22 @@
-import Firebase from 'firebase'
-
+export const config = {
+	apiKey: "AIzaSyBadrfcPzw6z89swYBM09VpM6MFbcjRguM",
+	authDomain: "portfolio-fe077.firebaseapp.com",
+	databaseURL: "https://portfolio-fe077.firebaseio.com",
+	projectId: "portfolio-fe077",
+	storageBucket: "portfolio-fe077.appspot.com",
+	messagingSenderId: "904603684341"
+};
+/*
+export const db = Firebase.database();
 const firebaseApp = Firebase.initializeApp({
-  // Populate your firebase configuration data here.
-  	apiKey: "AIzaSyCSOt2xKXdFqRxHwExHp4LWBGbDYVGj9h0",
-  	authDomain: "petshop-3ec0d.firebaseapp.com",
-  	databaseURL: "https://petshop-3ec0d.firebaseio.com",
-  	projectId: "petshop-3ec0d",
-  	storageBucket: "petshop-3ec0d.appspot.com",
-  	messagingSenderId: "847238548600"
+  apiKey: "AIzaSyBadrfcPzw6z89swYBM09VpM6MFbcjRguM",
+  authDomain: "portfolio-fe077.firebaseapp.com",
+  databaseURL: "https://portfolio-fe077.firebaseio.com",
+  projectId: "portfolio-fe077",
+  storageBucket: "",
+  messagingSenderId: "904603684341"
 });
+*/
 
 // Export the database for components to use.
 // If you want to get fancy, use mixins or provide / inject to avoid redundant imports.
-export const db = firebaseApp.database();

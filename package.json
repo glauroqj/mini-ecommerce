@@ -1,5 +1,5 @@
 {
-  "name": "mini-ecommerce",
+  "name": "portfolio",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "Glauro Juliani <glauro.juliani@sympla.com.br>",
@@ -10,7 +10,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "firebase": "^4.1.3",
+    "firebaseui": "^2.3.0",
+    "jquery": "^3.2.1",
     "vue": "^2.3.3",
     "vue-router": "^2.5.3",
     "vuefire": "^1.4.3"
