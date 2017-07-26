@@ -11,8 +11,9 @@ import './assets/css/template.css'
 import './assets/js/jquery.min.js'
 import './assets/js/bootstrap.min.js'
 
-import Login from './components/login.vue'
-import AuthSuccess from './components/authSuccess.vue';
+import login from './components/Login.vue'
+import panelControl from './components/PanelControl.vue'
+import sideMenu from './components/SideMenu.vue'
 
 
 Vue.use(VueRouter)
@@ -23,11 +24,12 @@ var Options = {
 	duration: 3000
 }
 Vue.use(Toasted, Options)
+
 Vue.config.productionTip = false
 
 const routes = [ 
-{ path: '/', component: Login },
-{ path: '/success', component: AuthSuccess }
+{ path: '/', component: login },
+{ path: '/painel-de-controle', component: panelControl }
 ]
 
 const router = new VueRouter({
@@ -41,7 +43,7 @@ new Vue({
 		Firebase.initializeApp(config);
 		Firebase.auth().onAuthStateChanged((user) => {
 			if(user) {
-				this.$router.push('/success')
+				this.$router.push('/painel-de-controle')
 			} else {
 				this.$router.push('/')
 			}

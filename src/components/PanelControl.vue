@@ -9,7 +9,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#/success">
+					<a class="navbar-brand" href="#/painel-de-controle">
 						{{ title }}
 					</a>
 				</div>
@@ -17,11 +17,11 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							<a href="#/success" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img :src="photo" class="img-circle" style="height: 30px; width: auto"> <span class="caret"></span>
+							<a href="#/painel-de-controle" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img :src="photo" class="img-circle" style="height: 30px; width: auto"> <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="#/success" class="disabled">{{name}}</a></li>
-								<li><a href="#/success">{{email}}</a></li>
+								<li><a class="disabled">{{name}}</a></li>
+								<li><a class="disabled">{{email}}</a></li>
 								<li role="separator" class="divider"></li>
 								<li>
 									<a href="/" v-on:click="logout()">Sair</a>
@@ -33,17 +33,9 @@
 			</div>
 		</nav>
 
-		<div class="row">
+		<div class="row-fluid">
 			<aside class="col-xs-3">
-				<div class="side-menu">
-					<ul class="list-group">
-						<li class="list-group-item">
-							<a href="">Painel de Controle</a>
-						</li>
-						<li class="list-group-item"></li>
-						<li class="list-group-item"></li>
-					</ul>
-				</div>
+				<sideMenu></sideMenu>
 			</aside>
 			<div class="col-xs-9">
 				<h3>Logado</h3>
@@ -54,9 +46,10 @@
 
 <script>
 	import Firebase from 'firebase'
+	import sideMenu from './SideMenu.vue'
 
 	export default {
-		name: 'authSuccess',
+		name: 'panelControl',
 		data() {
 			return {
 				title: 'Área Autenticada',
@@ -66,6 +59,9 @@
 				email: '',
 				user: {}
 			}
+		},
+		components:{
+			'sideMenu': sideMenu
 		},
 		mounted() {
 			var vm = this;
