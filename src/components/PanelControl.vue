@@ -38,7 +38,12 @@
 				<sideMenu></sideMenu>
 			</aside>
 			<div class="col-xs-9">
-				<h3>Logado</h3>
+				<h3>Lista itens menu</h3>
+			</div>
+			<div class="col-xs9">
+				<ul class="list-unstyled">
+					<li></li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -57,7 +62,7 @@
 				userId: '',
 				name: '',
 				email: '',
-				user: {}
+				navbar: {}
 			}
 		},
 		components:{
@@ -82,12 +87,26 @@
 					} else {
 						this.$toasted.show('Bem-Vindo '+ this.name);
 					}
+					this.listItens();
 				} 
 			},
 			logout: function() {
 				Firebase.auth().signOut();
 				this.$router.push('/')
 			},
+			listItens: function() {
+				$.ajax({
+					url: 'https://portfolio-fe077.firebaseio.com/home/navbar.json',
+					method: 'GET'
+				})
+				.done(function(data) {
+					console.log('success', data) 
+				})
+				.fail(function(xhr) {
+					console.log('error', xhr);
+				});
+
+			}
 		}
 	}
 </script>
