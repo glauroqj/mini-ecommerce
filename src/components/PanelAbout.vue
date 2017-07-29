@@ -6,7 +6,7 @@
 				<sideMenu></sideMenu>
 			</aside>
 			<div class="col-xs-9">
-				<h3>Lista itens menu</h3>
+				<h3>Sobre</h3>
 			</div>
 			<div class="col-xs9">
 				<ul class="list-unstyled">
@@ -23,7 +23,7 @@
 	import sideMenu from './SideMenu.vue'
 
 	export default {
-		name: 'panelControl',
+		name: 'panelAbout',
 		data() {
 			return {
 			}

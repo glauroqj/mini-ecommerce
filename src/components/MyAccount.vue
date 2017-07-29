@@ -6,7 +6,7 @@
 				<sideMenu></sideMenu>
 			</aside>
 			<div class="col-xs-9">
-				<h3>Lista itens menu</h3>
+				<h3>Minha Conta</h3>
 			</div>
 			<div class="col-xs9">
 				<ul class="list-unstyled">
@@ -23,31 +23,20 @@
 	import sideMenu from './SideMenu.vue'
 
 	export default {
-		name: 'panelControl',
-		data() {
+		name: 'myAccount',
+		data () {
 			return {
+
 			}
 		},
-		components:{
+		components: {
 			'navBar': navBar,
 			'sideMenu': sideMenu
 		},
 		mounted() {
+
 		},
 		methods: {
-			listItens: function() {
-				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/home/navbar.json',
-					method: 'GET'
-				})
-				.done(function(data) {
-					console.log('success', data) 
-				})
-				.fail(function(xhr) {
-					console.log('error', xhr);
-				});
-
-			}
 		}
 	}
 </script>

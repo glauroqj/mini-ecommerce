@@ -8,7 +8,7 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-4">
-					<form>
+					<form v-on:submit.prevent>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Email address</label>
 							<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" v-model="email">
@@ -17,7 +17,7 @@
 							<label for="exampleInputPassword1">Password</label>
 							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
 						</div>
-						<button type="button" class="btn btn-success" v-on:click="sendLogin()">Submit</button>
+						<button type="submit" class="btn btn-success" v-on:click="sendLogin()">Submit</button>
 					</form>
 				</div>
 			</div>

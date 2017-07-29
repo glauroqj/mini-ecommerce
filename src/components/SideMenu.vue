@@ -2,13 +2,9 @@
 	<div>
 		<div class="side-menu">
 			<ul class="list-group">
-				<li class="list-group-item">
-					<a href="#/painel-de-controle">Painel de Controle</a>
+				<li class="list-group-item" v-for="list in lists">
+					<a :href="list.link">{{list.title}}</a>
 				</li>
-				<li class="list-group-item">
-
-				</li>
-				<li class="list-group-item"></li>
 			</ul>
 		</div>
 	</div>
@@ -16,10 +12,17 @@
 
 <script>
 	export default {
-		name: 'SideMenu',
+		name: 'sideMenu',
 		data () {
 			return {
-
+				lists: [
+				{title: 'Painel de Controle', link: '#/painel-de-controle'},
+				{title: 'Sobre', link: '#/sobre'},
+				{title: 'Ensino', link: '#/ensino'},
+				{title: 'Skills', link: '#/skills'},
+				{title: 'Portfolio', link: '#/portfolio'},
+				{title: 'Contato', link: '#/contato'}
+				]
 			}
 		},
 		mounted() {
@@ -32,5 +35,17 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+	.side-menu li {
+		padding: 0px;
+	}
+	.side-menu li>a {
+		padding: 15px;
+		display: block;
+	}
+	.side-menu li>a:hover {
+		text-decoration: none;
+		background-color: #eee;
+		color: #323232;
+		padding-left: 18px;
+	}
 </style>
