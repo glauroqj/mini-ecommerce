@@ -2497,9 +2497,9 @@ legend {
   width: 100%;
   padding: 0;
   margin-bottom: 23px;
-  font-size: 19.5px;
+  font-size: 15px;
   line-height: inherit;
-  color: #212121;
+  color: #666666;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
 }
