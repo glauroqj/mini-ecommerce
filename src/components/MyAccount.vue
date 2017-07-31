@@ -33,7 +33,7 @@
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
 								<button v-show="edit == false" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
-								<button v-show="edit == true" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
+								<button v-show="edit == true" :editkey="editKey" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
 							</div>
 						</div>
 					</form>
@@ -48,7 +48,7 @@
 							<li>{{user.name}}</li>
 							<li>{{user.email}}</li>
 							<li>
-								<button :index="index" type="button" class="btn btn-xs btn-primary" v-on:click="editAccount(index)">
+								<button :index="index" type="button" class="btn btn-xs btn-primary" v-on:click="editAccount(index), editKey = index">
 									<i class="fa fa-pencil" aria-hidden="true"></i>
 								</button>
 								<button :index="index" v-on:click="editKey = index" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#removeUser">
