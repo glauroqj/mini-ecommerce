@@ -53,7 +53,8 @@
 		mounted() {
 			var vm = this;
 			setTimeout(function() {
-				vm.getUser()
+				/*vm.getUser() */
+				vm.loadDataAccount();
 			}, 1000);
 		},
 		methods: {
@@ -61,7 +62,7 @@
 				var vm = this;
 				this.user = Firebase.auth().currentUser; 
 				if(this.user) {
-					this.name = this.user.displayName; 
+					this.name = this.user.displayName;
 					this.email = this.user.email; 
 					this.photo = this.user.photoURL; 
 					this.userId = this.user.uid;
@@ -71,6 +72,30 @@
 						this.$ls.set('show_name_user', true);
 					}
 				} 
+			},
+			loadDataAccount: function() {
+				var vm = this;
+				$.ajax({
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json',
+					method: 'GET'
+				})
+				.done(function(data) {
+					console.log(data)
+					let key = Object.keys(data);
+					vm.photo = ''
+					vm.name= '';
+					vm.title = '';
+					/*
+					let firstLogin = this.$ls.get('show_name_user')
+					if(firstLogin == false) {
+						this.$toasted.show('Bem-Vindo usuário!');
+						this.$ls.set('show_name_user', true);
+					}
+					*/
+				})
+				.fail(function(xhr) {
+					console.log('error', xhr);
+				});
 			},
 			logout: function() {
 				this.$ls.set('show_name_user', false);

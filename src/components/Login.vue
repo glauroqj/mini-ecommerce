@@ -21,13 +21,6 @@
 					</form>
 				</div>
 			</div>
-			<div class="row">
-				<ul class="list-inline">
-					<li>
-						<div id="firebaseui-auth-container"></div>
-					</li>
-				</ul>
-			</div>
 		</div>
 	</div>
 </template>

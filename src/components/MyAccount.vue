@@ -32,7 +32,8 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
-								<button type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
+								<button v-show="edit == false" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
+								<button v-show="edit == true" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
 							</div>
 						</div>
 					</form>
@@ -40,20 +41,44 @@
 				<div class="col-xs-6">
 					<legend>Contas Cadastradas</legend>
 					<div class="form-group">
-						<ul class="list-unstyled" v-for="user in users">
+						<ul class="list-unstyled animated fadeIn" v-for="(user, index) in users">
 							<li>
 								<img :src="user.imgprofile" class="img-circle" style="height: 30px; width: auto">
 							</li>
 							<li>{{user.name}}</li>
 							<li>{{user.email}}</li>
-							<li class="pull-rigth">
-								<button type="button" class="btn btn-sm" v-for="key in keys">edit</button>
+							<li>
+								<button :index="index" type="button" class="btn btn-xs btn-primary" v-on:click="editAccount(index)">
+									<i class="fa fa-pencil" aria-hidden="true"></i>
+								</button>
+								<button :index="index" v-on:click="editKey = index" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#removeUser">
+									<i class="fa fa-trash" aria-hidden="true"></i>
+								</button>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade" id="removeUser" tabindex="-1" role="dialog" aria-labelledby="removeUser">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Atenção</h4>
+					</div>
+					<div class="modal-body">
+						<h5>Deseja mesmo remover este usuário?</h5>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Não</button>
+						<button type="button" :editkey="editKey" class="btn btn-danger btn-sm" v-on:click="removeAccount(editKey)" data-dismiss="modal" aria-label="Close">Desejo remover</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </template>
 
@@ -70,8 +95,9 @@
 				accEmail: '',
 				imgProfile: '',
 				username: '',
-				users: [],
-				keys: []
+				edit: false,
+				editKey: '',
+				users: []
 			}
 		},
 		components: {
@@ -81,15 +107,74 @@
 		mounted() {
 			var vm = this;
 			setTimeout(function() {
-				vm.user = Firebase.auth().currentUser;
-				if ( vm.user ) {
-					vm.accEmail = vm.user.email;
-					$('#accemail').attr('disabled','')
-				}
 				vm.loadDataAccount();
 			}, 450)
 		},
 		methods: {
+			reset: function() {
+				this.accEmail = '';
+				this.imgProfile = '';
+				this.accName = '';
+				this.editKey = '';
+			},
+			editAccount: function(index) {
+				var vm = this;
+				$.ajax({
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json',
+					method: 'GET'
+				})
+				.done(function(data) {
+					console.log(data)
+					vm.accEmail = data.email;
+					vm.imgProfile = data.imgprofile;
+					vm.accName = data.name;
+					vm.edit = true;
+					vm.editKey = index;
+				})
+				.fail(function(xhr) {
+					console.log('error', xhr);
+				});
+			},
+			sendEditAccount: function(index) {
+				var vm = this;
+				let data = {
+					email: vm.accEmail,
+					imgprofile: vm.imgProfile,
+					name: vm.accName
+				}	
+				$.ajax({
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json',
+					method: 'PATCH',
+					dataType: 'json',
+					data: JSON.stringify(data)
+				})
+				.done(function(data) {
+					console.log('success', data)
+					vm.edit = false;
+					vm.$toasted.show('Usuário editado com sucesso!');
+					vm.loadDataAccount();
+					vm.reset();
+				})
+				.fail(function(xhr) {
+					console.log('error', xhr);
+				});
+			},
+			removeAccount: function(index) {
+				var vm = this;
+				$.ajax({
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json',
+					method: 'DELETE'
+				})
+				.done(function(data) {
+					console.log('success', data);
+					vm.$toasted.show('Usuário removido com sucesso!');
+					vm.loadDataAccount();
+					vm.reset();
+				})
+				.fail(function(xhr) {
+					console.log('error', xhr);
+				});
+			},
 			loadDataAccount: function() {
 				var vm = this;
 				$.ajax({
@@ -97,15 +182,13 @@
 					method: 'GET'
 				})
 				.done(function(data) {
-					console.log('success', data)
 					vm.users = data;
-					vm.keys = Object.keys(data)
-					console.log(vm.keys)
+					vm.reset();
+					//vm.keys = Object.keys(data)
 				})
 				.fail(function(xhr) {
 					console.log('error', xhr);
 				});
-
 			},
 			sendDataAccount: function() {
 				var vm = this;
@@ -116,16 +199,15 @@
 				}				
 
 				$.ajax({
-					// url: 'https://portfolio-fe077.firebaseio.com/myaccount/'+username+'/.json',
 					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json',
 					method: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(data)
 				})
 				.done(function(data) {
-					console.log('success', data)
 					vm.$toasted.show('Usuário criado com sucesso!');
 					vm.loadDataAccount();
+					vm.reset();
 				})
 				.fail(function(xhr) {
 					console.log('error', xhr);
