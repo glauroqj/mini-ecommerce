@@ -10,7 +10,7 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="#/painel-de-controle">
-						{{ title }}
+						Área Autenticada - {{ title }}
 					</a>
 				</div>
 
@@ -21,7 +21,6 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li><a class="disabled">{{name}}</a></li>
-								<li><a class="disabled">{{email}}</a></li>
 								<li><a href="#/minha-conta">Minha Conta</a></li>
 								<li role="separator" class="divider"></li>
 								<li>
@@ -43,7 +42,7 @@
 		name: 'navBar',
 		data () {
 			return {
-				title: 'Área Autenticada',
+				title: '',
 				photo: '',
 				userId: '',
 				name: '',
@@ -80,11 +79,12 @@
 					method: 'GET'
 				})
 				.done(function(data) {
-					console.log(data)
+					vm.info = data;
 					let key = Object.keys(data);
-					vm.photo = ''
-					vm.name= '';
-					vm.title = '';
+					key = key[0];
+					vm.photo = data[key].imgprofile;
+					vm.name = data[key].name;
+					vm.title = data[key].name;
 					/*
 					let firstLogin = this.$ls.get('show_name_user')
 					if(firstLogin == false) {

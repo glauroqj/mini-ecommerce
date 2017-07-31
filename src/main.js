@@ -8,7 +8,7 @@ import Toasted from 'vue-toasted'
 import VueLocalStorage from 'vue-ls';
 
 import './assets/css/template.css'
-import './assets/css/template.css'
+import './assets/css/main.css'
 import './assets/js/jquery.min.js'
 import './assets/js/bootstrap.min.js'
 
