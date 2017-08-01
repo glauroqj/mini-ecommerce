@@ -51,27 +51,12 @@
 		},
 		mounted() {
 			var vm = this;
+			vm.loadDataAccount();
 			setTimeout(function() {
 				/*vm.getUser() */
-				vm.loadDataAccount();
 			}, 1000);
 		},
 		methods: {
-			getUser: function() {
-				var vm = this;
-				this.user = Firebase.auth().currentUser; 
-				if(this.user) {
-					this.name = this.user.displayName;
-					this.email = this.user.email; 
-					this.photo = this.user.photoURL; 
-					this.userId = this.user.uid;
-					let firstLogin = this.$ls.get('show_name_user')
-					if(this.name == null && firstLogin == false) {
-						this.$toasted.show('Bem-Vindo usuário!');
-						this.$ls.set('show_name_user', true);
-					}
-				} 
-			},
 			loadDataAccount: function() {
 				var vm = this;
 				$.ajax({
@@ -85,13 +70,11 @@
 					vm.photo = data[key].imgprofile;
 					vm.name = data[key].name;
 					vm.title = data[key].name;
-					/*
-					let firstLogin = this.$ls.get('show_name_user')
-					if(firstLogin == false) {
-						this.$toasted.show('Bem-Vindo usuário!');
-						this.$ls.set('show_name_user', true);
+					let firstLogin = vm.$ls.get('show_name_user')
+					if( firstLogin == false) {
+						vm.$toasted.show('Bem-Vindo '+vm.name);
+						vm.$ls.set('show_name_user', true);
 					}
-					*/
 				})
 				.fail(function(xhr) {
 					console.log('error', xhr);
@@ -102,6 +85,21 @@
 				Firebase.auth().signOut();
 				this.$router.push('/');
 			},
+			getUser: function() {
+				var vm = this;
+				this.user = Firebase.auth().currentUser;
+				if(this.user) {
+					this.name = this.user.displayName;
+					this.email = this.user.email; 
+					this.photo = this.user.photoURL; 
+					this.userId = this.user.uid;
+					let firstLogin = this.$ls.get('show_name_user')
+					if(this.name == null && firstLogin == false) {
+						this.$toasted.show('Bem-Vindo usuário!');
+						this.$ls.set('show_name_user', true);
+					}
+				} 
+			}
 		}
 	}
 </script>

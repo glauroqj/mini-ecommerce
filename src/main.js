@@ -60,7 +60,7 @@ new Vue({
 	created() {
 		Firebase.initializeApp(config);
 		Firebase.auth().onAuthStateChanged((user) => {
-			if(user) {
+			if (user) {
 				this.$router.push('/painel-de-controle')
 			} else {
 				this.$router.push('/')

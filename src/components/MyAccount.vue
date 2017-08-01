@@ -8,8 +8,8 @@
 			<div class="col-xs-9">
 				<h3>Minha Conta</h3>
 			</div>
-			<div class="col-xs9">
-				<div class="col-xs-6">
+			<div class="col-xs-9">
+				<div class="col-xs-8 row">
 					<form class="form-horizontal" v-on:submit.prevent>
 						<legend>Gerencie seus dados</legend>
 						<div class="form-group">
@@ -21,7 +21,7 @@
 						<div class="form-group">
 							<label for="" class="col-lg-2 control-label">Email</label>
 							<div class="col-lg-10">
-								<input type="text" class="form-control" id="accemail" placeholder="E-mail" v-model="accEmail">
+								<input type="email" class="form-control" id="accemail" placeholder="E-mail" v-model="accEmail">
 							</div>
 						</div>
 						<div class="form-group">
@@ -38,7 +38,7 @@
 						</div>
 					</form>
 				</div>
-				<div class="col-xs-6">
+				<div class="col-xs-8 row">
 					<legend>Contas Cadastradas</legend>
 					<div class="form-group">
 						<ul class="list-unstyled animated fadeIn" v-for="(user, index) in users">
@@ -169,6 +169,7 @@
 					console.log('success', data);
 					vm.$toasted.show('Usuário removido com sucesso!');
 					vm.loadDataAccount();
+					vm.edit = false;
 					vm.reset();
 				})
 				.fail(function(xhr) {
