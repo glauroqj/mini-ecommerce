@@ -1,6 +1,5 @@
 <template lang="html">
 	<div>
-		<navBar></navBar>
 		<div class="row-fluid">
 			<aside class="col-xs-3">
 				<sideMenu></sideMenu>
@@ -83,7 +82,6 @@
 </template>
 
 <script>
-	import navBar from './NavBar.vue'
 	import Firebase from 'firebase'
 	import sideMenu from './SideMenu.vue'
 
@@ -101,7 +99,6 @@
 			}
 		},
 		components: {
-			'navBar': navBar,
 			'sideMenu': sideMenu
 		},
 		mounted() {

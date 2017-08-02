@@ -46,7 +46,8 @@
 				photo: '',
 				userId: '',
 				name: '',
-				email: ''
+				email: '',
+				user: ''
 			}
 		},
 		mounted() {
@@ -59,6 +60,11 @@
 		methods: {
 			loadDataAccount: function() {
 				var vm = this;
+				vm.user = Firebase.auth().currentUser;
+				if (vm.user) {
+					this.userId = this.user.uid;
+				}
+				console.log(vm.user)
 				$.ajax({
 					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json',
 					method: 'GET'
