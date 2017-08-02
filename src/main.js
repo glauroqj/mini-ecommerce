@@ -59,11 +59,17 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
 	state: {
-		count: 0
+		navbar: ''
 	},
 	mutations: {
-		increment (state) {
-			state.count++
+		verifyUser(state, value) {
+			var vm = this;
+			state.navbar = value;
+		}
+	},
+	getters: {
+		stateUser() {
+			return 'olar'
 		}
 	}
 });

@@ -24,7 +24,30 @@
       'navBar': navBar
     },
     mounted() {
-      this.loadInitial()
+      this.loadInitial();
+      // this.$store.watch(
+      //   function (state) {
+      //     return state.navbar;
+      //   },
+      //   function () {
+      //   //do something on data change
+      //   console.log('inside watch store')
+      // },
+      // {
+      //   deep: true //add this if u need to watch object properties change etc.
+      // }
+      // );
+      let store = this.$store
+      store.watch(
+        function (state) {
+          return state.navbar;
+          console.log(state)
+        },
+        function () {
+        //do something on data change
+        console.log('inside watch store')
+      }
+      );
     },
     methods: {
       loadInitial: function() {

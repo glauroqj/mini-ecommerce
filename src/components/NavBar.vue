@@ -50,12 +50,14 @@
 				user: ''
 			}
 		},
+		created() {
+		},
 		mounted() {
 			var vm = this;
 			setTimeout(function() {
 				vm.loadDataAccount();
 				/*vm.getUser() */
-			}, 450);
+			}, 750);
 		},
 		methods: {
 			loadDataAccount: function() {
@@ -83,8 +85,10 @@
 					.fail(function(xhr) {
 						console.log('error', xhr);
 					});
+					this.$store.commit('verifyUser', true)
 				} else {
 					/* not user */
+					this.$store.commit('verifyUser', false)
 				}
 			},
 			logout: function() {
