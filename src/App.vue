@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-if="login == false">
+    <navBar></navBar>
+    <div v-if="navbar == true">
     </div>
-      <navBar></navBar>
     <router-view></router-view> 
   </div>
 </template>
@@ -16,13 +16,24 @@
 
     data () {
       return {
-        login: true
+        navbar: false,
+        user: ''
       }
     },
     components:{
       'navBar': navBar
     },
+    mounted() {
+      this.loadInitial()
+    },
     methods: {
+      loadInitial: function() {
+        var vm = this;
+        vm.user = Firebase.auth().currentUser;
+        if (vm.user) {
+          vm.navbar = true;
+        }
+      }
     }
   }
 </script>

@@ -52,39 +52,40 @@
 		},
 		mounted() {
 			var vm = this;
-			vm.loadDataAccount();
 			setTimeout(function() {
+				vm.loadDataAccount();
 				/*vm.getUser() */
-			}, 1000);
+			}, 450);
 		},
 		methods: {
 			loadDataAccount: function() {
 				var vm = this;
 				vm.user = Firebase.auth().currentUser;
 				if (vm.user) {
-					this.userId = this.user.uid;
+					vm.userId = vm.user.uid;
+					$.ajax({
+						url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json',
+						method: 'GET'
+					})
+					.done(function(data) {
+						vm.info = data;
+						let key = Object.keys(data);
+						key = key[0];
+						vm.photo = data[key].imgprofile;
+						vm.name = data[key].name;
+						vm.title = data[key].name;
+						let firstLogin = vm.$ls.get('show_name_user')
+						if( firstLogin == false) {
+							vm.$toasted.show('Bem-Vindo '+vm.name);
+							vm.$ls.set('show_name_user', true);
+						}
+					})
+					.fail(function(xhr) {
+						console.log('error', xhr);
+					});
+				} else {
+					/* not user */
 				}
-				console.log(vm.user)
-				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json',
-					method: 'GET'
-				})
-				.done(function(data) {
-					vm.info = data;
-					let key = Object.keys(data);
-					key = key[0];
-					vm.photo = data[key].imgprofile;
-					vm.name = data[key].name;
-					vm.title = data[key].name;
-					let firstLogin = vm.$ls.get('show_name_user')
-					if( firstLogin == false) {
-						vm.$toasted.show('Bem-Vindo '+vm.name);
-						vm.$ls.set('show_name_user', true);
-					}
-				})
-				.fail(function(xhr) {
-					console.log('error', xhr);
-				});
 			},
 			logout: function() {
 				this.$ls.set('show_name_user', false);

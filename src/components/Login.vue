@@ -42,6 +42,10 @@
 				password: ''
 			}
 		},
+		created() {
+			let teste = this.$store;
+			console.log(teste);
+		},
 		mounted() {
 			/*
 			var uiConfig = {

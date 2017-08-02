@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
@@ -25,6 +26,8 @@ import myAccount from './components/MyAccount.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueFire)
+Vue.use(Vuex)
+
 var Options = {
 	theme: 'primary',
 	position: 'top-right',
@@ -33,7 +36,7 @@ var Options = {
 Vue.use(Toasted, Options)
 
 var vuelocalstorage_options = {
-  namespace: 'vuejs__'
+	namespace: 'vuejs__'
 };
 Vue.use(VueLocalStorage, vuelocalstorage_options);
 
@@ -41,22 +44,38 @@ Vue.config.productionTip = false
 
 const routes = [ 
 { path: '/', component: login },
-{ path: '/painel-de-controle', component: panelControl },
-{ path: '/sobre', component: panelAbout },
-{ path: '/ensino', component: panelEducation },
-{ path: '/skills', component: panelSkills },
-{ path: '/portfolio', component: panelPortfolio },
-{ path: '/contato', component: panelContact },
-{ path: '/minha-conta', component: myAccount }
+{ path: '/painel-de-controle', auth: true, component: panelControl },
+{ path: '/sobre', auth: true, component: panelAbout },
+{ path: '/ensino', auth: true, component: panelEducation },
+{ path: '/skills', auth: true, component: panelSkills },
+{ path: '/portfolio', auth: true, component: panelPortfolio },
+{ path: '/contato', auth: true, component: panelContact },
+{ path: '/minha-conta', auth: true, component: myAccount }
 ]
 
 const router = new VueRouter({
 	routes
 });
 
+const store = new Vuex.Store({
+	state: {
+		count: 0
+	},
+	mutations: {
+		increment (state) {
+			state.count++
+		}
+	}
+});
+
 /* eslint-disable no-new */
 new Vue({
 	router,
+	store,
+	data () {
+		return {
+		}
+	},
 	created() {
 		Firebase.initializeApp(config);
 		Firebase.auth().onAuthStateChanged((user) => {
