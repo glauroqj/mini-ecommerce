@@ -1,5 +1,5 @@
 <template lang="html">
-	<div>
+	<div v-if="shownavbar == true">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -40,6 +40,9 @@
 
 	export default {
 		name: 'navBar',
+		props: {
+			shownavbar: Boolean
+		},
 		data () {
 			return {
 				title: '',
@@ -52,12 +55,13 @@
 		},
 		created() {
 		},
+		watch: {
+			'shownavbar': function() {
+				this.loadDataAccount();
+			}
+		},
 		mounted() {
 			var vm = this;
-			setTimeout(function() {
-				vm.loadDataAccount();
-				/*vm.getUser() */
-			}, 750);
 		},
 		methods: {
 			loadDataAccount: function() {
@@ -85,10 +89,8 @@
 					.fail(function(xhr) {
 						console.log('error', xhr);
 					});
-					this.$store.commit('verifyUser', true)
 				} else {
 					/* not user */
-					this.$store.commit('verifyUser', false)
 				}
 			},
 			logout: function() {

@@ -59,18 +59,10 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
 	state: {
-		navbar: ''
 	},
 	mutations: {
-		verifyUser(state, value) {
-			var vm = this;
-			state.navbar = value;
-		}
 	},
 	getters: {
-		stateUser() {
-			return 'olar'
-		}
 	}
 });
 
@@ -84,13 +76,6 @@ new Vue({
 	},
 	created() {
 		Firebase.initializeApp(config);
-		Firebase.auth().onAuthStateChanged((user) => {
-			if (user) {
-				this.$router.push('/painel-de-controle')
-			} else {
-				this.$router.push('/')
-			}
-		});
 	},
 	render: h => h(App)
 }).$mount('#app')

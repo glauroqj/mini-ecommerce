@@ -1,8 +1,6 @@
 <template>
   <div>
-    <navBar></navBar>
-    <div v-if="navbar == true">
-    </div>
+    <navBar :shownavbar="shownavbar"></navBar>
     <router-view></router-view> 
   </div>
 </template>
@@ -16,46 +14,31 @@
 
     data () {
       return {
-        navbar: false,
+        shownavbar: false,
         user: ''
       }
     },
     components:{
       'navBar': navBar
     },
+    created() {
+      Firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.shownavbar = true;
+          this.$router.push('/painel-de-controle')
+        } else {
+          this.$router.push('/')
+          this.shownavbar = false;
+        }
+      });
+    },
     mounted() {
-      this.loadInitial();
-      // this.$store.watch(
-      //   function (state) {
-      //     return state.navbar;
-      //   },
-      //   function () {
-      //   //do something on data change
-      //   console.log('inside watch store')
-      // },
-      // {
-      //   deep: true //add this if u need to watch object properties change etc.
-      // }
-      // );
+      var vm = this;
       let store = this.$store
-      store.watch(
-        function (state) {
-          return state.navbar;
-          console.log(state)
-        },
-        function () {
-        //do something on data change
-        console.log('inside watch store')
-      }
-      );
     },
     methods: {
       loadInitial: function() {
         var vm = this;
-        vm.user = Firebase.auth().currentUser;
-        if (vm.user) {
-          vm.navbar = true;
-        }
       }
     }
   }
