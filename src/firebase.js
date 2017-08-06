@@ -4,12 +4,13 @@ export const config = {
 	databaseURL: "https://portfolio-fe077.firebaseio.com",
 	projectId: "portfolio-fe077",
 	storageBucket: "portfolio-fe077.appspot.com",
-	messagingSenderId: "904603684341"
+	messagingSenderId: "904603684341",
+	auth: "lQAB9NjzWkeYCcxYPknyuXsYn4UijCpTYwSdQJX3"
 };
 /*
 export const db = Firebase.database();
 const firebaseApp = Firebase.initializeApp({
-  apiKey: "AIzaSyBadrfcPzw6z89swYBM09VpM6MFbcjRguM",
+  apiKey: "",
   authDomain: "portfolio-fe077.firebaseapp.com",
   databaseURL: "https://portfolio-fe077.firebaseio.com",
   projectId: "portfolio-fe077",

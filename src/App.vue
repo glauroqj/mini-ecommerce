@@ -24,6 +24,7 @@
     created() {
       Firebase.auth().onAuthStateChanged((user) => {
         if (user) {
+          this.user = user;
           this.shownavbar = true;
           this.$router.push('/painel-de-controle')
         } else {
@@ -35,6 +36,9 @@
     mounted() {
       var vm = this;
       let store = this.$store
+      setTimeout(function() {
+        vm.loadInitial()
+      }, 1000)
     },
     methods: {
       loadInitial: function() {

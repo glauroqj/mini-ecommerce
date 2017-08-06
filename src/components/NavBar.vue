@@ -16,6 +16,9 @@
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
+						<li v-if="loading==true">
+							<loading :height="30" :width="30"></loading>
+						</li>
 						<li class="dropdown">
 							<a href="#/painel-de-controle" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img :src="photo" class="img-circle" style="height: 30px; width: auto"> <span class="caret"></span>
 							</a>
@@ -37,6 +40,8 @@
 
 <script>
 	import Firebase from 'firebase'
+	import {config} from '../firebase.js'
+	import loading from '../components/Loading.vue'
 
 	export default {
 		name: 'navBar',
@@ -50,10 +55,14 @@
 				userId: '',
 				name: '',
 				email: '',
-				user: ''
+				user: '',
+				loading: true
 			}
 		},
 		created() {
+		},
+		components:{
+			'loading': loading
 		},
 		watch: {
 			'shownavbar': function() {
@@ -70,7 +79,7 @@
 				if (vm.user) {
 					vm.userId = vm.user.uid;
 					$.ajax({
-						url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json',
+						url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json?auth='+config.auth,
 						method: 'GET'
 					})
 					.done(function(data) {
@@ -85,6 +94,7 @@
 							vm.$toasted.show('Bem-Vindo '+vm.name);
 							vm.$ls.set('show_name_user', true);
 						}
+						vm.loading = false;
 					})
 					.fail(function(xhr) {
 						console.log('error', xhr);

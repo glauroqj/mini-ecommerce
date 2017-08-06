@@ -1,6 +1,9 @@
 html, body {
 	height: 100%;
 }
+a, a:focus {
+	text-decoration:  none;
+}
 button, .btn, button:focus, .btn:focus {
 	outline:  none;
 }

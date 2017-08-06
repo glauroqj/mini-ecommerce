@@ -47,6 +47,9 @@
 				<div class="col-xs-8 row">
 					<legend>Informações exibidas</legend>
 					<div class="form-group">
+					<div v-if="loading==true">
+							<loading :height="30" :width="30"></loading>
+						</div>
 						<ul class="list-unstyled animated fadeIn" v-for="(info, index) in infos" :index="index">
 							<li>
 								<h5>Título</h5>
@@ -100,7 +103,9 @@
 
 <script>
 	import Firebase from 'firebase'
+	import {config} from '../firebase.js'
 	import sideMenu from './SideMenu.vue'
+	import loading from '../components/Loading.vue'
 
 	export default {
 		name: 'panelAbout',
@@ -112,11 +117,13 @@
 				btnURL: '',
 				edit: false,
 				editKey: '',
-				infos: {}
+				infos: {},
+				loading: true
 			}
 		},
 		components:{
-			'sideMenu': sideMenu
+			'sideMenu': sideMenu,
+			'loading': loading
 		},
 		mounted() {
 			var vm = this;
@@ -135,7 +142,7 @@
 			editInfo: function(index) {
 				var vm = this;
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/about/'+index+'.json',
+					url: 'https://portfolio-fe077.firebaseio.com/about/'+index+'.json?auth='+config.auth,
 					method: 'GET'
 				})
 				.done(function(data) {
@@ -153,7 +160,7 @@
 			removeInfo: function(index) {
 				var vm = this;			
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/about/'+index+'.json',
+					url: 'https://portfolio-fe077.firebaseio.com/about/'+index+'.json?auth='+config.auth,
 					method: 'DELETE'
 				})
 				.done(function(data) {
@@ -176,7 +183,7 @@
 					btnurl: vm.btnURL
 				}	
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/about.json',
+					url: 'https://portfolio-fe077.firebaseio.com/about.json?auth='+config.auth,
 					method: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(data)
@@ -202,7 +209,7 @@
 				}	
 				
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/about/'+index+'.json',
+					url: 'https://portfolio-fe077.firebaseio.com/about/'+index+'.json?auth='+config.auth,
 					method: 'PATCH',
 					dataType: 'json',
 					data: JSON.stringify(data)
@@ -221,12 +228,13 @@
 			loadDataInfo: function() {
 				var vm = this;
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/about.json',
+					url: 'https://portfolio-fe077.firebaseio.com/about.json?auth='+config.auth,
 					method: 'GET'
 				})
 				.done(function(data) {
 					vm.infos = data;
 					vm.reset();
+					vm.loading = false;
 					//vm.keys = Object.keys(data)
 				})
 				.fail(function(xhr) {

@@ -60,7 +60,7 @@
 				var vm = this;
 				Firebase.auth().signInWithEmailAndPassword(vm.email, vm.password).catch(function(error) {
 					if ( !error.code ) {
-
+						
 					} else {
 						vm.$toasted.show('Login/Senha inválidos! :(')
 					}

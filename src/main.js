@@ -14,6 +14,7 @@ import './assets/js/jquery.min.js'
 import './assets/js/bootstrap.min.js'
 
 import navBar from './components/NavBar.vue'
+import loading from './components/Loading.vue'
 import login from './components/Login.vue'
 import panelControl from './components/PanelControl.vue'
 import panelAbout from './components/PanelAbout.vue'
