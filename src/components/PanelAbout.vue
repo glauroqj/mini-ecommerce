@@ -38,8 +38,8 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
-								<button v-show="edit == false" :class="{'disabled': title == '' || subTitle == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataInfo()">Salvar</button>
-								<button v-show="edit == true" :class="{'disabled': title == '' || subTitle == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditInfo(editKey)">Salvar alterações</button>
+								<button v-if="edit == false" :class="{'disabled': title == '' || subTitle == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataInfo()">Salvar</button>
+								<button v-if="edit == true" :class="{'disabled': title == '' || subTitle == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditInfo(editKey)">Salvar alterações</button>
 							</div>
 						</div>
 					</form>
@@ -247,5 +247,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.list-unstyled  {
+	border-bottom: 1px solid #cecece;
+	padding-bottom: 15px;
+}
 </style>
