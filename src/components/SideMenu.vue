@@ -3,7 +3,7 @@
 		<div class="side-menu">
 			<ul class="list-group">
 				<li class="list-group-item" v-for="list in lists">
-					<a :href="list.link">{{list.title}}</a>
+					<a :href="list.link" :class="{'active': list.link == route}">{{list.title}}</a>
 				</li>
 			</ul>
 		</div>
@@ -22,11 +22,13 @@
 				{title: 'Skills', link: '#/skills'},
 				{title: 'Portfolio', link: '#/portfolio'},
 				{title: 'Contato', link: '#/contato'}
-				]
+				],
+				route: ''
 			}
 		},
 		mounted() {
-
+			this.route = '#'+this.$route.path
+			console.log(this.route)
 		},
 		methods: {
 		}
@@ -42,10 +44,16 @@
 		padding: 15px;
 		display: block;
 	}
+	.side-menu li>a.active {
+		padding-left: 20px;
+		font-weight: 600;
+		background-color: #eee;
+		color: #323232;
+	}
 	.side-menu li>a:hover {
 		text-decoration: none;
 		background-color: #eee;
 		color: #323232;
-		padding-left: 18px;
+		padding-left: 20px;
 	}
 </style>
