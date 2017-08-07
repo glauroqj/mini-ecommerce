@@ -45,10 +45,10 @@
 		display: block;
 	}
 	.side-menu li>a.active {
-		padding-left: 20px;
-		font-weight: 600;
+		text-decoration: none;
 		background-color: #eee;
 		color: #323232;
+		padding-left: 20px;
 	}
 	.side-menu li>a:hover {
 		text-decoration: none;

@@ -51,7 +51,8 @@ const routes = [
 { path: '/skills', auth: true, component: panelSkills },
 { path: '/portfolio', auth: true, component: panelPortfolio },
 { path: '/contato', auth: true, component: panelContact },
-{ path: '/minha-conta', auth: true, component: myAccount }
+{ path: '/minha-conta', auth: true, component: myAccount },
+{ path: '*', redirect: '/painel-de-controle' }
 ]
 
 const router = new VueRouter({

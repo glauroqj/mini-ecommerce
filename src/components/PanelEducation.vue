@@ -26,10 +26,10 @@
 						</div>
 						<div class="form-group">
 							<label for="" class="col-lg-2 control-label">Duração</label>
-							<div class="col-lg-6">
+							<div class="col-lg-5">
 								<input type="text" class="form-control" id="" placeholder="5 anos" v-model="duration">
 							</div>
-							<div class="col-lg-4 form-inline">
+							<div class="col-lg-5 form-inline">
 								<div class="radio">
 									<label>
 										<input type="radio" name="optionsRadios" id="optionsRadios1" value="cursando" v-model="coursestatus">
