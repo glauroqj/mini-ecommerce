@@ -40,6 +40,9 @@
 				<div class="col-xs-8 row">
 					<legend>Contas Cadastradas</legend>
 					<div class="form-group">
+						<div v-if="loading==true">
+							<loading :height="30" :width="30"></loading>
+						</div>
 						<ul class="list-unstyled animated fadeIn" v-for="(user, index) in users">
 							<li>
 								<img :src="user.imgprofile" class="img-circle" style="height: 30px; width: auto">
@@ -83,7 +86,9 @@
 
 <script>
 	import Firebase from 'firebase'
+	import {config} from '../firebase.js'
 	import sideMenu from './SideMenu.vue'
+	import loading from '../components/Loading.vue'
 
 	export default {
 		name: 'myAccount',
@@ -95,11 +100,13 @@
 				username: '',
 				edit: false,
 				editKey: '',
-				users: []
+				users: [],
+				loading: true
 			}
 		},
 		components: {
-			'sideMenu': sideMenu
+			'sideMenu': sideMenu,
+			'loading': loading
 		},
 		mounted() {
 			var vm = this;
@@ -117,7 +124,7 @@
 			editAccount: function(index) {
 				var vm = this;
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json',
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json?auth='+config.auth,
 					method: 'GET'
 				})
 				.done(function(data) {
@@ -140,7 +147,7 @@
 					name: vm.accName
 				}	
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json',
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json?auth='+config.auth,
 					method: 'PATCH',
 					dataType: 'json',
 					data: JSON.stringify(data)
@@ -159,7 +166,7 @@
 			removeAccount: function(index) {
 				var vm = this;
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json',
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json?auth='+config.auth,
 					method: 'DELETE'
 				})
 				.done(function(data) {
@@ -176,12 +183,13 @@
 			loadDataAccount: function() {
 				var vm = this;
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json',
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json?auth='+config.auth,
 					method: 'GET'
 				})
 				.done(function(data) {
 					vm.users = data;
 					vm.reset();
+					vm.loading = false;
 					//vm.keys = Object.keys(data)
 				})
 				.fail(function(xhr) {
@@ -197,7 +205,7 @@
 				}				
 
 				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json',
+					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users.json?auth='+config.auth,
 					method: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(data)
