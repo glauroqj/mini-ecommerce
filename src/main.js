@@ -44,27 +44,62 @@ Vue.use(VueLocalStorage, vuelocalstorage_options);
 Vue.config.productionTip = false
 
 const routes = [ 
-{ path: '/', component: login },
-{ path: '/painel-de-controle', auth: true, component: panelControl },
-{ path: '/sobre', auth: true, component: panelAbout },
-{ path: '/ensino', auth: true, component: panelEducation },
-{ path: '/skills', auth: true, component: panelSkills },
-{ path: '/portfolio', auth: true, component: panelPortfolio },
-{ path: '/contato', auth: true, component: panelContact },
-{ path: '/minha-conta', auth: true, component: myAccount },
-{ path: '*', redirect: '/painel-de-controle' }
+	{ path: '/', component: login },
+	{ path: '/painel-de-controle', auth: true, component: panelControl },
+	{ path: '/sobre', auth: true, component: panelAbout },
+	{ path: '/ensino', auth: true, component: panelEducation },
+	{ path: '/skills', auth: true, component: panelSkills },
+	{ path: '/portfolio', auth: true, component: panelPortfolio },
+	{ path: '/contato', auth: true, component: panelContact },
+	{ path: '/minha-conta', auth: true, component: myAccount },
+	{ path: '*', redirect: '/painel-de-controle' }
 ]
 
 const router = new VueRouter({
 	routes
 });
 
+
+/*store*/
+const LOGIN = 'LOGIN';
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+const LOGOUT = 'LOGOUT';
 const store = new Vuex.Store({
 	state: {
+		isLoggedIn: !!localStorage.getItem('token')
 	},
 	mutations: {
+		[LOGIN] (state) {
+			state.pending = true;
+		},
+		[LOGIN_SUCCESS] (state) {
+			state.isLoggedIn = true;
+			state.pending = false;
+		},
+		[LOGOUT](state) {
+			state.isLoggedIn = false;
+		}
+	},
+	actions: {
+		login({ commit }, creds) {
+			commit(LOGIN); // show spinner
+			return new Promise(resolve => {
+				setTimeout(() => {
+					localStorage.setItem('token', 'JWT');
+					commit(LOGIN_SUCCESS);
+					resolve();
+				}, 1000);
+			});
+		},
+		logout({ commit }) {
+			localStorage.removeItem('token');
+			commit(LOGOUT);
+		}
 	},
 	getters: {
+		isLoggedIn: state => {
+			return state.isLoggedIn
+		}
 	}
 });
 

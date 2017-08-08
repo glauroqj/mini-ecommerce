@@ -107,6 +107,7 @@
 				this.$ls.set('show_name_user', false);
 				Firebase.auth().signOut();
 				this.$router.push('/');
+				this.$store.dispatch('logout');
 			},
 			getUser: function() {
 				var vm = this;

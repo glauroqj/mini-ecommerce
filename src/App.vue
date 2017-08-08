@@ -22,11 +22,13 @@
       'navBar': navBar
     },
     created() {
+      var vm = this;
       Firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           this.user = user;
           this.shownavbar = true;
-          this.$router.push('/painel-de-controle')
+          this.$store.dispatch('login');
+          this.$router.push('/painel-de-controle')          
         } else {
           this.$router.push('/')
           this.shownavbar = false;
@@ -34,11 +36,7 @@
       });
     },
     mounted() {
-      var vm = this;
-      let store = this.$store
-      setTimeout(function() {
-        vm.loadInitial()
-      }, 1000)
+
     },
     methods: {
       loadInitial: function() {

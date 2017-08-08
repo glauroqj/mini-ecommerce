@@ -27,8 +27,7 @@
 			}
 		},
 		mounted() {
-			this.route = '#'+this.$route.path
-			console.log(this.route)
+			this.route = '#'+this.$route.path;
 		},
 		methods: {
 		}
