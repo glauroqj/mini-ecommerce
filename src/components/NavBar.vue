@@ -59,6 +59,11 @@
 				loading: true
 			}
 		},
+		computed: {
+			isLoggedIn: function() {
+				return this.$store.getters.isLoggedIn
+			}
+		},
 		created() {
 		},
 		components:{
@@ -71,6 +76,7 @@
 		},
 		mounted() {
 			var vm = this;
+			console.log();
 		},
 		methods: {
 			loadDataAccount: function() {
