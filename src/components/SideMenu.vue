@@ -11,25 +11,53 @@
 </template>
 
 <script>
+	import Firebase from 'firebase'
+	import {
+		config
+	} from '../firebase.js'
+	import loading from '../components/Loading.vue'
+	
 	export default {
 		name: 'sideMenu',
-		data () {
+		props: {
+			statusMenu: Boolean
+		},
+		data() {
 			return {
-				lists: [
-				{title: 'Painel de Controle', link: '#/painel-de-controle'},
-				{title: 'Sobre', link: '#/sobre'},
-				{title: 'Ensino', link: '#/ensino'},
-				{title: 'Skills', link: '#/skills'},
-				{title: 'Portfolio', link: '#/portfolio'},
-				{title: 'Contato', link: '#/contato'}
+				lists: [{
+						title: 'Painel de Controle',
+						link: '#/painel-de-controle'
+					},
+					{
+						title: 'Sobre',
+						link: '#/sobre'
+					},
+					{
+						title: 'Ensino',
+						link: '#/ensino'
+					},
+					{
+						title: 'Skills',
+						link: '#/skills'
+					},
+					{
+						title: 'Portfolio',
+						link: '#/portfolio'
+					},
+					{
+						title: 'Contato',
+						link: '#/contato'
+					}
 				],
 				route: ''
 			}
 		},
 		mounted() {
-			this.route = '#'+this.$route.path;
+			var vm = this;
+			this.route = '#' + this.$route.path;
 		},
 		methods: {
+
 		}
 	}
 </script>
@@ -39,16 +67,19 @@
 	.side-menu li {
 		padding: 0px;
 	}
+	
 	.side-menu li>a {
 		padding: 15px;
 		display: block;
 	}
+	
 	.side-menu li>a.active {
 		text-decoration: none;
 		background-color: #eee;
 		color: #323232;
 		padding-left: 20px;
 	}
+	
 	.side-menu li>a:hover {
 		text-decoration: none;
 		background-color: #eee;

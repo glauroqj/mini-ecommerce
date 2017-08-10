@@ -31,6 +31,7 @@
           this.$router.push('/painel-de-controle')          
         } else {
           this.$router.push('/')
+          this.$store.dispatch('logout');
           this.shownavbar = false;
         }
       });

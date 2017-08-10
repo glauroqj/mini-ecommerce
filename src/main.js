@@ -64,9 +64,12 @@ const router = new VueRouter({
 const LOGIN = 'LOGIN';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGOUT = 'LOGOUT';
+const HIDE_MENU = 'HIDE_MENU'
+const SHOW_MENU = 'SHOW_MENU'
 const store = new Vuex.Store({
 	state: {
-		isLoggedIn: !!localStorage.getItem('token')
+		isLoggedIn: !!localStorage.getItem('token'),
+		menuChange: ''
 	},
 	mutations: {
 		[LOGIN] (state) {
@@ -76,8 +79,14 @@ const store = new Vuex.Store({
 			state.isLoggedIn = true;
 			state.pending = false;
 		},
-		[LOGOUT](state) {
+		[LOGOUT] (state) {
 			state.isLoggedIn = false;
+		},
+		[HIDE_MENU] (state) {
+			state.menuChange = false;
+		},
+		[SHOW_MENU] (state) {
+			state.menuChange = true;
 		}
 	},
 	actions: {
@@ -94,11 +103,20 @@ const store = new Vuex.Store({
 		logout({ commit }) {
 			localStorage.removeItem('token');
 			commit(LOGOUT);
+		},
+		menuHide({commit}) {
+			commit(HIDE_MENU)
+		},
+		menuShow({commit}) {
+			commit(SHOW_MENU)
 		}
 	},
 	getters: {
 		isLoggedIn: state => {
 			return state.isLoggedIn
+		},
+		menuChange: state => {
+			return state.menuChange
 		}
 	}
 });

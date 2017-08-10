@@ -48,6 +48,9 @@
 		props: {
 			shownavbar: Boolean
 		},
+		components:{
+			'loading': loading
+		},
 		data () {
 			return {
 				title: '',
@@ -65,9 +68,6 @@
 			}
 		},
 		created() {
-		},
-		components:{
-			'loading': loading
 		},
 		watch: {
 			'shownavbar': function() {
