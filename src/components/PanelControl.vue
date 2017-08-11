@@ -2,7 +2,7 @@
 	<div>
 		<div class="row-fluid">
 			<aside class="col-xs-3">
-				<sideMenu></sideMenu>
+				<sideMenu :statusMenu="menuChange"></sideMenu>
 			</aside>
 			<div class="col-xs-9">
 				<h3>Lista itens menu</h3>
@@ -32,7 +32,6 @@
 		},
 		data() {
 			return {
-				statusMenu: ''
 			}
 		},
 		computed: {
@@ -41,7 +40,6 @@
 			}
 		},
 		mounted() {
-			this.statusMenu = this.menuChange
 		},
 		methods: {
 			hideMenu: function() {

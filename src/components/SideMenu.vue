@@ -1,7 +1,7 @@
 <template lang="html">
 	<div>
 		<div class="side-menu">
-			<ul class="list-group">
+			<ul class="list-group"  v-if="statusMenu == true">
 				<li class="list-group-item" v-for="list in lists">
 					<a :href="list.link" :class="{'active': list.link == route}">{{list.title}}</a>
 				</li>
