@@ -1,9 +1,9 @@
 <template lang="html">
-	<div>
-		<div class="side-menu">
-			<ul class="list-group"  v-if="statusMenu == true">
+	<div v-if="statusMenu == true">
+		<div class="side-menu animated fadeInLeft">
+			<ul class="list-group">
 				<li class="list-group-item" v-for="list in lists">
-					<a :href="list.link" :class="{'active': list.link == route}">{{list.title}}</a>
+					<a :href="list.link" :class="{'active': list.link == route}" v-on:click="getRoute()">{{list.title}}</a>
 				</li>
 			</ul>
 		</div>
@@ -12,9 +12,7 @@
 
 <script>
 	import Firebase from 'firebase'
-	import {
-		config
-	} from '../firebase.js'
+	import {config} from '../firebase.js'
 	import loading from '../components/Loading.vue'
 	
 	export default {
@@ -25,39 +23,46 @@
 		data() {
 			return {
 				lists: [{
-						title: 'Painel de Controle',
-						link: '#/painel-de-controle'
-					},
-					{
-						title: 'Sobre',
-						link: '#/sobre'
-					},
-					{
-						title: 'Ensino',
-						link: '#/ensino'
-					},
-					{
-						title: 'Skills',
-						link: '#/skills'
-					},
-					{
-						title: 'Portfolio',
-						link: '#/portfolio'
-					},
-					{
-						title: 'Contato',
-						link: '#/contato'
-					}
+					title: 'Painel de Controle',
+					link: '#/painel-de-controle'
+				},
+				{
+					title: 'Sobre',
+					link: '#/sobre'
+				},
+				{
+					title: 'Ensino',
+					link: '#/ensino'
+				},
+				{
+					title: 'Skills',
+					link: '#/skills'
+				},
+				{
+					title: 'Portfolio',
+					link: '#/portfolio'
+				},
+				{
+					title: 'Contato',
+					link: '#/contato'
+				}
 				],
 				route: ''
 			}
 		},
+		computed: {
+		},
+		watch: {
+		},
 		mounted() {
-			var vm = this;
-			this.route = '#' + this.$route.path;
 		},
 		methods: {
-
+			getRoute: function() {
+				var vm = this;
+				setTimeout(function(){
+					vm.route = '#' + vm.$route.path;
+				}, 50)
+			}
 		}
 	}
 </script>

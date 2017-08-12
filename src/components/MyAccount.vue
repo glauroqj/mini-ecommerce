@@ -1,64 +1,59 @@
 <template lang="html">
 	<div>
-		<div class="row-fluid">
-			<aside class="col-xs-3">
-				<sideMenu></sideMenu>
-			</aside>
-			<div class="col-xs-9">
-				<h3>Minha Conta</h3>
-			</div>
-			<div class="col-xs-9">
-				<div class="col-xs-8 row">
-					<form class="form-horizontal" v-on:submit.prevent>
-						<legend>Gerencie seus dados</legend>
-						<div class="form-group">
-							<label for="" class="col-lg-2 control-label">Nome</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="" placeholder="Nome Completo" v-model="accName">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-lg-2 control-label">Email</label>
-							<div class="col-lg-10">
-								<input type="email" class="form-control" id="accemail" placeholder="E-mail" v-model="accEmail">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-lg-2 control-label">Url Imagem</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="" placeholder="url imagem" v-model="imgProfile">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-10 col-lg-offset-2">
-								<button v-show="edit == false" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
-								<button v-show="edit == true" :editkey="editKey" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="col-xs-8 row">
-					<legend>Contas Cadastradas</legend>
+		<div class="col-xs-9">
+			<h3>Minha Conta</h3>
+		</div>
+		<div class="col-xs-9">
+			<div class="col-xs-8 row">
+				<form class="form-horizontal" v-on:submit.prevent>
+					<legend>Gerencie seus dados</legend>
 					<div class="form-group">
-						<div v-if="loading==true">
-							<loading :height="30" :width="30"></loading>
+						<label for="" class="col-lg-2 control-label">Nome</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="" placeholder="Nome Completo" v-model="accName">
 						</div>
-						<ul class="list-unstyled animated fadeIn" v-for="(user, index) in users">
-							<li>
-								<img :src="user.imgprofile" class="img-circle" style="height: 30px; width: auto">
-							</li>
-							<li>{{user.name}}</li>
-							<li>{{user.email}}</li>
-							<li>
-								<button :index="index" type="button" class="btn btn-xs btn-primary" v-on:click="editAccount(index), editKey = index">
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</button>
-								<button :index="index" v-on:click="editKey = index" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#removeUser">
-									<i class="fa fa-trash" aria-hidden="true"></i>
-								</button>
-							</li>
-						</ul>
 					</div>
+					<div class="form-group">
+						<label for="" class="col-lg-2 control-label">Email</label>
+						<div class="col-lg-10">
+							<input type="email" class="form-control" id="accemail" placeholder="E-mail" v-model="accEmail">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-lg-2 control-label">Url Imagem</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="" placeholder="url imagem" v-model="imgProfile">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-10 col-lg-offset-2">
+							<button v-show="edit == false" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
+							<button v-show="edit == true" :editkey="editKey" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-xs-8 row">
+				<legend>Contas Cadastradas</legend>
+				<div class="form-group">
+					<div v-if="loading==true">
+						<loading :height="30" :width="30"></loading>
+					</div>
+					<ul class="list-unstyled animated fadeIn" v-for="(user, index) in users">
+						<li>
+							<img :src="user.imgprofile" class="img-circle" style="height: 30px; width: auto">
+						</li>
+						<li>{{user.name}}</li>
+						<li>{{user.email}}</li>
+						<li>
+							<button :index="index" type="button" class="btn btn-xs btn-primary" v-on:click="editAccount(index), editKey = index">
+								<i class="fa fa-pencil" aria-hidden="true"></i>
+							</button>
+							<button :index="index" v-on:click="editKey = index" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#removeUser">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</button>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -87,7 +82,6 @@
 <script>
 	import Firebase from 'firebase'
 	import {config} from '../firebase.js'
-	import sideMenu from './SideMenu.vue'
 	import loading from '../components/Loading.vue'
 
 	export default {
@@ -105,7 +99,6 @@
 			}
 		},
 		components: {
-			'sideMenu': sideMenu,
 			'loading': loading
 		},
 		mounted() {

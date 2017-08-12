@@ -1,24 +1,18 @@
 <template lang="html">
 	<div>
-		<div class="row-fluid">
-			<aside class="col-xs-3">
-				<sideMenu></sideMenu>
-			</aside>
-			<div class="col-xs-9">
-				<h3>Portfolio</h3>
-			</div>
-			<div class="col-xs9">
-				<ul class="list-unstyled">
-					<li></li>
-				</ul>
-			</div>
+		<div class="col-xs-9">
+			<h3>Portfolio</h3>
+		</div>
+		<div class="col-xs9">
+			<ul class="list-unstyled">
+				<li></li>
+			</ul>
 		</div>
 	</div>
 </template>
 
 <script>
 	import Firebase from 'firebase'
-	import sideMenu from './SideMenu.vue'
 
 	export default {
 		name: 'panelPortfolio',
@@ -27,7 +21,6 @@
 			}
 		},
 		components:{
-			'sideMenu': sideMenu
 		},
 		mounted() {
 		},

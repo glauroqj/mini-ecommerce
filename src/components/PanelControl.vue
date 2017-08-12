@@ -1,42 +1,30 @@
 <template lang="html">
 	<div>
-		<div class="row-fluid">
-			<aside class="col-xs-3">
-				<sideMenu :statusMenu="menuChange"></sideMenu>
-			</aside>
-			<div class="col-xs-9">
-				<h3>Lista itens menu</h3>
-			</div>
-			<div class="col-xs9">
-				<ul class="list-inline">
-					<li>
-						<button class="btn btn-md btn-success" v-on:click="showMenu()">Ativar</button>
-					</li>
-					<li>
-						<button class="btn btn-md btn-danger" v-on:click="hideMenu()">Desativar</button>
-					</li>
-				</ul>
-			</div>
+		<div class="col-xs-9">
+			<h3>Lista itens menu</h3>
+		</div>
+		<div class="col-xs9">
+			<ul class="list-inline">
+				<li>
+					<button class="btn btn-md btn-success" v-on:click="showMenu()">Ativar</button>
+				</li>
+				<li>
+					<button class="btn btn-md btn-danger" v-on:click="hideMenu()">Desativar</button>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>
 
 <script>
 	import Firebase from 'firebase'
-	import sideMenu from './SideMenu.vue'
 
 	export default {
 		name: 'panelControl',
 		components:{
-			'sideMenu': sideMenu
 		},
 		data() {
 			return {
-			}
-		},
-		computed: {
-			menuChange: function() {
-				return this.$store.getters.menuChange;
 			}
 		},
 		mounted() {

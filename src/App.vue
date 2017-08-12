@@ -1,13 +1,21 @@
 <template>
   <div>
     <navBar :shownavbar="shownavbar"></navBar>
-    <router-view></router-view> 
+    <div class="row-fluid">
+      <aside class="col-xs-3">
+        <sideMenu :statusMenu="menuChange"></sideMenu>
+      </aside>
+      <div class="col-xs-9">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import Firebase from 'firebase'
   import navBar from './components/NavBar.vue'
+  import sideMenu from './components/SideMenu.vue'
 
   export default {
     name: 'Portfolio',
@@ -19,7 +27,13 @@
       }
     },
     components:{
-      'navBar': navBar
+      'navBar': navBar,
+      'sideMenu': sideMenu
+    },
+    computed: {
+      menuChange: function() {
+        return this.$store.getters.menuChange;
+      }
     },
     created() {
       var vm = this;

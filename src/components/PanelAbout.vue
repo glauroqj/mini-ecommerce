@@ -1,81 +1,75 @@
 <template lang="html">
 	<div>
-		<div class="row-fluid">
-			<aside class="col-xs-3">
-				<sideMenu></sideMenu>
-			</aside>
-
-			<div class="col-xs-9">
-				<h3>Sobre</h3>
-			</div>
-			<div class="col-xs-9">
-				<div class="col-xs-8 row">
-					<form class="form-horizontal" v-on:submit.prevent>
-						<legend>Banner inicial, informe os dados</legend>
-						<div class="form-group">
-							<label for="" class="col-lg-2 control-label">Título</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="" v-model="title">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-lg-2 control-label">Sub-Título</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="" v-model="subTitle">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-lg-2 control-label">Botão Texto</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="" placeholder="Label" v-model="btnText">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-lg-2 control-label">Botão URL</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="" placeholder="#/desafio" v-model="btnURL">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-10 col-lg-offset-2">
-								<button v-if="edit == false" :class="{'disabled': title == '' || subTitle == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataInfo()">Salvar</button>
-								<button v-if="edit == true" :class="{'disabled': title == '' || subTitle == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditInfo(editKey)">Salvar alterações</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="col-xs-8 row">
-					<legend>Informações exibidas</legend>
+		<div class="col-xs-9">
+			<h3>Sobre</h3>
+		</div>
+		<div class="col-xs-9">
+			<div class="col-xs-8 row">
+				<form class="form-horizontal" v-on:submit.prevent>
+					<legend>Banner inicial, informe os dados</legend>
 					<div class="form-group">
-					<div v-if="loading==true">
-							<loading :height="30" :width="30"></loading>
+						<label for="" class="col-lg-2 control-label">Título</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="" v-model="title">
 						</div>
-						<ul class="list-unstyled animated fadeIn" v-for="(info, index) in infos" :index="index">
-							<li>
-								<h5>Título</h5>
-								<p>{{info.title}}</p>
-							</li>
-							<li>
-								<h5>Sub-Título</h5>
-								<p>{{info.subtitle}}</p>
-							</li>
-							<li>
-								<h5>Botão</h5>
-								<p>
-									<button class="btn btn-md disabled">{{info.btntext}}</button>
-								</p>
-								<p>URL botão: {{info.btnurl}}</p>
-							</li>
-							<li>
-								<button :index="index" type="button" class="btn btn-xs btn-primary" v-on:click="editInfo(index)">
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</button>
-								<button :index="index" v-on:click="editKey = index" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#removeInfo">
-									<i class="fa fa-trash" aria-hidden="true"></i>
-								</button>
-							</li>
-						</ul>
 					</div>
+					<div class="form-group">
+						<label for="" class="col-lg-2 control-label">Sub-Título</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="" v-model="subTitle">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-lg-2 control-label">Botão Texto</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="" placeholder="Label" v-model="btnText">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-lg-2 control-label">Botão URL</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="" placeholder="#/desafio" v-model="btnURL">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-10 col-lg-offset-2">
+							<button v-if="edit == false" :class="{'disabled': title == '' || subTitle == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataInfo()">Salvar</button>
+							<button v-if="edit == true" :class="{'disabled': title == '' || subTitle == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditInfo(editKey)">Salvar alterações</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-xs-8 row">
+				<legend>Informações exibidas</legend>
+				<div class="form-group">
+					<div v-if="loading==true">
+						<loading :height="30" :width="30"></loading>
+					</div>
+					<ul class="list-unstyled animated fadeIn" v-for="(info, index) in infos" :index="index">
+						<li>
+							<h5>Título</h5>
+							<p>{{info.title}}</p>
+						</li>
+						<li>
+							<h5>Sub-Título</h5>
+							<p>{{info.subtitle}}</p>
+						</li>
+						<li>
+							<h5>Botão</h5>
+							<p>
+								<button class="btn btn-md disabled">{{info.btntext}}</button>
+							</p>
+							<p>URL botão: {{info.btnurl}}</p>
+						</li>
+						<li>
+							<button :index="index" type="button" class="btn btn-xs btn-primary" v-on:click="editInfo(index)">
+								<i class="fa fa-pencil" aria-hidden="true"></i>
+							</button>
+							<button :index="index" v-on:click="editKey = index" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#removeInfo">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</button>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -104,7 +98,6 @@
 <script>
 	import Firebase from 'firebase'
 	import {config} from '../firebase.js'
-	import sideMenu from './SideMenu.vue'
 	import loading from '../components/Loading.vue'
 
 	export default {
@@ -122,7 +115,6 @@
 			}
 		},
 		components:{
-			'sideMenu': sideMenu,
 			'loading': loading
 		},
 		mounted() {
@@ -247,8 +239,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.list-unstyled  {
-	border-bottom: 1px solid #cecece;
-	padding-bottom: 15px;
-}
+	.list-unstyled  {
+		border-bottom: 1px solid #cecece;
+		padding-bottom: 15px;
+	}
 </style>
