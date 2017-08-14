@@ -1,26 +1,24 @@
 <template lang="html">
 	<div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-offset-4 col-md-4 box-login">
-					<div class="panel panel-default">
-						<div class="panel-heading text-center">
-							<h3><i class="fa fa-lock" aria-hidden="true"></i> Login</h3>
-						</div>
-						<div class="panel-body">
-							<div class="">
-								<form v-on:submit.prevent>
-									<div class="form-group">
-										<label>E-mail</label>
-										<input type="email" class="form-control" id="" v-model="email">
-									</div>
-									<div class="form-group">
-										<label>Senha</label>
-										<input type="password" class="form-control" id="" v-model="password">
-									</div>
-									<button :class="{'disabled': email == '' && password == ''}" type="submit" class="btn btn-success" v-on:click="sendLogin()">entrar</button>
-								</form>
-							</div>
+		<div class="row">
+			<div class="col-md-offset-2 col-md-4 box-login">
+				<div class="panel panel-default">
+					<div class="panel-heading text-center">
+						<h3><i class="fa fa-lock" aria-hidden="true"></i> Login</h3>
+					</div>
+					<div class="panel-body">
+						<div class="">
+							<form v-on:submit.prevent>
+								<div class="form-group">
+									<label>E-mail</label>
+									<input type="email" class="form-control" id="" v-model="email">
+								</div>
+								<div class="form-group">
+									<label>Senha</label>
+									<input type="password" class="form-control" id="" v-model="password">
+								</div>
+								<button :class="{'disabled': email == '' && password == ''}" type="submit" class="btn btn-success" v-on:click="sendLogin()">entrar</button>
+							</form>
 						</div>
 					</div>
 				</div>

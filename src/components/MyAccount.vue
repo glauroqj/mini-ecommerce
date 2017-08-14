@@ -20,15 +20,15 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="" class="col-lg-2 control-label">Url Imagem</label>
+						<label for="" class="col-lg-2 control-label">Imagem</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control" id="" placeholder="url imagem" v-model="imgProfile">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-2">
-							<button v-show="edit == false" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
-							<button v-show="edit == true" :editkey="editKey" :class="{'disabled': accEmail == '' || accName == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
+							<button v-show="edit == false" :disabled="accEmail == '' || accName == ''" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
+							<button v-show="edit == true" :editkey="editKey" :disabled="accEmail == '' || accName == ''" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
 						</div>
 					</div>
 				</form>

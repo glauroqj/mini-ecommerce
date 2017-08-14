@@ -44,15 +44,15 @@ Vue.use(VueLocalStorage, vuelocalstorage_options);
 Vue.config.productionTip = false
 
 const routes = [ 
-	{ path: '/', component: login },
-	{ path: '/painel-de-controle', auth: true, component: panelControl },
-	{ path: '/sobre', auth: true, component: panelAbout },
-	{ path: '/ensino', auth: true, component: panelEducation },
-	{ path: '/skills', auth: true, component: panelSkills },
-	{ path: '/portfolio', auth: true, component: panelPortfolio },
-	{ path: '/contato', auth: true, component: panelContact },
-	{ path: '/minha-conta', auth: true, component: myAccount },
-	{ path: '*', redirect: '/painel-de-controle' }
+{ path: '/', component: login },
+{ path: '/painel-de-controle', auth: true, component: panelControl },
+{ path: '/sobre', auth: true, component: panelAbout },
+{ path: '/ensino', auth: true, component: panelEducation },
+{ path: '/skills', auth: true, component: panelSkills },
+{ path: '/portfolio', auth: true, component: panelPortfolio },
+{ path: '/contato', auth: true, component: panelContact },
+{ path: '/minha-conta', auth: true, component: myAccount },
+{ path: '*', redirect: '/painel-de-controle' }
 ]
 
 const router = new VueRouter({
@@ -134,3 +134,5 @@ new Vue({
 	},
 	render: h => h(App)
 }).$mount('#app')
+
+const bucket = Firebase.storage().ref();

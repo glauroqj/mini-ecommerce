@@ -41,8 +41,8 @@
 					</div>
 					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-2">
-							<button v-if="edit == false" :class="{'disabled': graduation == '' || school == ''}" type="submit" class="btn btn-primary" v-on:click="sendDataInfo()">Salvar</button>
-							<button v-if="edit == true" :class="{'disabled': graduation == '' || school == ''}" type="submit" class="btn btn-warning" v-on:click="sendEditInfo(editKey)" v-on:keyup.enter.native="sendEditInfo(editKey)">Salvar alterações</button>
+							<button v-if="edit == false" :disabled="graduation == '' || school == ''" type="submit" class="btn btn-primary" v-on:click="sendDataInfo()">Salvar</button>
+							<button v-if="edit == true" :disabled="graduation == '' || school == ''" type="submit" class="btn btn-warning" v-on:click="sendEditInfo(editKey)" v-on:keyup.enter.native="sendEditInfo(editKey)">Salvar alterações</button>
 						</div>
 					</div>
 				</form>

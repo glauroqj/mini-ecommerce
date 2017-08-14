@@ -42,11 +42,13 @@
           this.user = user;
           this.shownavbar = true;
           this.$store.dispatch('login');
-          this.$router.push('/painel-de-controle')          
+          this.$router.push('/painel-de-controle');
+          this.$store.dispatch('menuShow');        
         } else {
           this.$router.push('/')
           this.$store.dispatch('logout');
           this.shownavbar = false;
+          this.$store.dispatch('menuHide');
         }
       });
     },
