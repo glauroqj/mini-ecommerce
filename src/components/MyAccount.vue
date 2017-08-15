@@ -26,6 +26,15 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="" class="col-lg-2 control-label">Imagem</label>
+						<div class="col-lg-10">
+							<dropzone id="myVueDropzone" url="portfolio-fe077.appspot.com" v-on:vdropzone-success="showSuccess">
+								<!-- Optional parameters if any! -->
+								<input type="hidden" name="token" value="xxx">
+							</dropzone>
+						</div>
+					</div>
+					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-2">
 							<button v-show="edit == false" :disabled="accEmail == '' || accName == ''" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
 							<button v-show="edit == true" :editkey="editKey" :disabled="accEmail == '' || accName == ''" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
@@ -83,6 +92,7 @@
 	import Firebase from 'firebase'
 	import {config} from '../firebase.js'
 	import loading from '../components/Loading.vue'
+	import Dropzone from 'vue2-dropzone'
 
 	export default {
 		name: 'myAccount',
@@ -99,7 +109,8 @@
 			}
 		},
 		components: {
-			'loading': loading
+			'loading': loading,
+			'dropzone': Dropzone
 		},
 		mounted() {
 			var vm = this;
@@ -113,6 +124,9 @@
 				this.imgProfile = '';
 				this.accName = '';
 				this.editKey = '';
+			},
+			showSuccess: function(file) {
+				console.log('A file was successfully uploaded')
 			},
 			editAccount: function(index) {
 				var vm = this;

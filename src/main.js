@@ -6,7 +6,8 @@ import VueFire from 'vuefire'
 import Firebase from 'firebase'
 import {config} from './firebase.js'
 import Toasted from 'vue-toasted'
-import VueLocalStorage from 'vue-ls';
+import VueLocalStorage from 'vue-ls'
+import Dropzone from 'vue2-dropzone'
 
 import './assets/css/template.css'
 import './assets/css/main.css'
@@ -28,6 +29,7 @@ import myAccount from './components/MyAccount.vue'
 Vue.use(VueRouter)
 Vue.use(VueFire)
 Vue.use(Vuex)
+Vue.use(Dropzone)
 
 var Options = {
 	theme: 'primary',
@@ -134,5 +136,3 @@ new Vue({
 	},
 	render: h => h(App)
 }).$mount('#app')
-
-const bucket = Firebase.storage().ref();

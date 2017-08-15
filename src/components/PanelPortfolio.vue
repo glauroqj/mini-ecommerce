@@ -3,7 +3,7 @@
 		<div class="col-xs-9">
 			<h3>Portfolio</h3>
 		</div>
-		<div class="col-xs9">
+		<div class="col-xs-9">
 			<ul class="list-unstyled">
 				<li></li>
 			</ul>
@@ -25,19 +25,7 @@
 		mounted() {
 		},
 		methods: {
-			listItens: function() {
-				$.ajax({
-					url: 'https://portfolio-fe077.firebaseio.com/home/navbar.json',
-					method: 'GET'
-				})
-				.done(function(data) {
-					console.log('success', data) 
-				})
-				.fail(function(xhr) {
-					console.log('error', xhr);
-				});
-
-			}
+			
 		}
 	}
 </script>
