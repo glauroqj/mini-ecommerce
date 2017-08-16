@@ -27,11 +27,13 @@
 					</div>
 					<div class="form-group">
 						<label for="" class="col-lg-2 control-label">Imagem</label>
-						<div class="col-lg-10">
-							<dropzone id="myVueDropzone" url="portfolio-fe077.appspot.com" v-on:vdropzone-success="showSuccess">
-								<!-- Optional parameters if any! -->
-								<input type="hidden" name="token" value="xxx">
-							</dropzone>
+						<div class="col-lg-8">
+							<input type="file" class="form-control" id="upImage" v-on:change="loadImage">
+						</div>
+						<div class="col-xs-2">
+							<div v-if="loadingImg==true">
+								<loading :height="30" :width="30"></loading> {{porcentagem}}
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -65,6 +67,9 @@
 					</ul>
 				</div>
 			</div>
+			<div class="col-xs-8 row">
+				<legend>Galeria</legend>
+			</div>
 		</div>
 
 		<div class="modal fade" id="removeUser" tabindex="-1" role="dialog" aria-labelledby="removeUser">
@@ -92,7 +97,6 @@
 	import Firebase from 'firebase'
 	import {config} from '../firebase.js'
 	import loading from '../components/Loading.vue'
-	import Dropzone from 'vue2-dropzone'
 
 	export default {
 		name: 'myAccount',
@@ -105,12 +109,21 @@
 				edit: false,
 				editKey: '',
 				users: [],
-				loading: true
+				gallery: [],
+				loading: true,
+				loadingImg: false,
+				porcentagem: '',
+				bucket: '',
+				fileName: '',
+				urlImage: ''
 			}
 		},
 		components: {
-			'loading': loading,
-			'dropzone': Dropzone
+			'loading': loading
+		},
+		created() {
+			const storageRef = Firebase.storage().ref();
+			this.bucket = storageRef;
 		},
 		mounted() {
 			var vm = this;
@@ -125,8 +138,21 @@
 				this.accName = '';
 				this.editKey = '';
 			},
-			showSuccess: function(file) {
-				console.log('A file was successfully uploaded')
+			loadImage: function(e) {
+				var vm = this;
+				let file = e.target.files[0] || e.dataTransfer.files[0]
+				let uploadTask = this.bucket.child('minhaconta/'+file.name).put(file);
+				uploadTask.on('state_changed', function(snapshot) {
+					vm.loadingImg = true;
+					vm.porcentagem = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				}, function(error) {
+					vm.$toasted.show('Erro no upload :(');
+				}, function() {
+					vm.urlImage = uploadTask.snapshot.downloadURL;
+					vm.loadingImg = false;
+					vm.$toasted.show('Upload completo!');
+					$('#upImage').val('')
+				});
 			},
 			editAccount: function(index) {
 				var vm = this;
