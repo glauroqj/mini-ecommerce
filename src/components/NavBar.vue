@@ -76,7 +76,6 @@
 		},
 		mounted() {
 			var vm = this;
-			console.log();
 		},
 		methods: {
 			loadDataAccount: function() {
@@ -92,7 +91,7 @@
 						vm.info = data;
 						let key = Object.keys(data);
 						key = key[0];
-						vm.photo = data[key].imgprofile;
+						vm.photo = data[key].urlImage;
 						vm.name = data[key].name;
 						vm.title = data[key].name;
 						let firstLogin = vm.$ls.get('show_name_user')

@@ -22,10 +22,10 @@
 					<div class="form-group">
 						<label for="" class="col-lg-2 control-label">Imagem</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" id="" placeholder="url imagem" v-model="imgProfile">
+							<input type="text" class="form-control" disabled="disabled" id="" placeholder="url imagem" v-model="urlImage">
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" v-if="urlImage == ''">
 						<label for="" class="col-lg-2 control-label">Imagem</label>
 						<div class="col-lg-8">
 							<input type="file" class="form-control" id="upImage" v-on:change="loadImage">
@@ -36,6 +36,16 @@
 							</div>
 						</div>
 					</div>
+					<div class="box-preview-img form-group" v-if="urlImage != ''">
+						<label for="" class="col-lg-2 control-label">Preview Imagem</label>
+						<div class="col-lg-8">
+							<img :src="urlImage" alt="" class="img-circle" style="height: 30px; width: auto">
+							<button type="button" :pathUrl="pathUrl" v-on:click="pathUrl = pathUrl" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#removeImg">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-2">
 							<button v-show="edit == false" :disabled="accEmail == '' || accName == ''" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
@@ -52,7 +62,7 @@
 					</div>
 					<ul class="list-unstyled animated fadeIn" v-for="(user, index) in users">
 						<li>
-							<img :src="user.imgprofile" class="img-circle" style="height: 30px; width: auto">
+							<img :src="user.urlImage" class="img-circle" style="height: 30px; width: auto">
 						</li>
 						<li>{{user.name}}</li>
 						<li>{{user.email}}</li>
@@ -66,9 +76,6 @@
 						</li>
 					</ul>
 				</div>
-			</div>
-			<div class="col-xs-8 row">
-				<legend>Galeria</legend>
 			</div>
 		</div>
 
@@ -90,6 +97,24 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="removeImg" tabindex="-1" role="dialog" aria-labelledby="removeImg">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Atenção</h4>
+					</div>
+					<div class="modal-body">
+						<h5>Deseja mesmo remover esta imagem?</h5>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Não</button>
+						<button type="button" :pathUrl="pathUrl" class="btn btn-danger btn-sm" v-on:click="removeImg(pathUrl)" data-dismiss="modal" aria-label="Close">Desejo remover</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </template>
 
@@ -104,7 +129,6 @@
 			return {
 				accName: '',
 				accEmail: '',
-				imgProfile: '',
 				username: '',
 				edit: false,
 				editKey: '',
@@ -114,8 +138,8 @@
 				loadingImg: false,
 				porcentagem: '',
 				bucket: '',
-				fileName: '',
-				urlImage: ''
+				urlImage: '',
+				pathUrl: ''
 			}
 		},
 		components: {
@@ -130,20 +154,27 @@
 			setTimeout(function() {
 				vm.loadDataAccount();
 			}, 450)
+			console.log()
+
 		},
 		methods: {
 			reset: function() {
 				this.accEmail = '';
-				this.imgProfile = '';
+				this.urlImage = '';
 				this.accName = '';
 				this.editKey = '';
+				this.pathUrl = '';
+				this.urlImage = '';
+				this.porcentagem = '';
 			},
 			loadImage: function(e) {
 				var vm = this;
 				let file = e.target.files[0] || e.dataTransfer.files[0]
 				let uploadTask = this.bucket.child('minhaconta/'+file.name).put(file);
 				uploadTask.on('state_changed', function(snapshot) {
+					console.log(snapshot)
 					vm.loadingImg = true;
+					vm.pathUrl = snapshot.ref.fullPath;
 					vm.porcentagem = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 				}, function(error) {
 					vm.$toasted.show('Erro no upload :(');
@@ -151,7 +182,20 @@
 					vm.urlImage = uploadTask.snapshot.downloadURL;
 					vm.loadingImg = false;
 					vm.$toasted.show('Upload completo!');
-					$('#upImage').val('')
+					$('#upImage').val('');
+				});
+			},
+			removeImg: function(path) {
+				var vm = this;
+				let deleteTask = this.bucket.child(path)
+				deleteTask.delete().then(function() {
+					vm.$toasted.show('Imagem deletada!');
+					vm.urlImage = '';
+					vm.pathUrl = '';
+				}).catch(function(error) {
+					vm.$toasted.show('Erro na remoção da imagem! :(');
+					vm.urlImage = '';
+					vm.pathUrl = '';
 				});
 			},
 			editAccount: function(index) {
@@ -163,7 +207,8 @@
 				.done(function(data) {
 					console.log(data)
 					vm.accEmail = data.email;
-					vm.imgProfile = data.imgprofile;
+					vm.urlImage = data.urlImage;
+					vm.pathUrl = data.pathUrl;
 					vm.accName = data.name;
 					vm.edit = true;
 					vm.editKey = index;
@@ -176,8 +221,9 @@
 				var vm = this;
 				let data = {
 					email: vm.accEmail,
-					imgprofile: vm.imgProfile,
-					name: vm.accName
+					urlImage: vm.urlImage,
+					name: vm.accName,
+					pathUrl: vm.pathUrl
 				}	
 				$.ajax({
 					url: 'https://portfolio-fe077.firebaseio.com/myaccount/users/'+index+'.json?auth='+config.auth,
@@ -223,6 +269,7 @@
 					vm.users = data;
 					vm.reset();
 					vm.loading = false;
+					//vm.$parent.$children[0].loadDataAccount()
 					//vm.keys = Object.keys(data)
 				})
 				.fail(function(xhr) {
@@ -233,8 +280,9 @@
 				var vm = this;
 				let data = {
 					email: vm.accEmail,
-					imgprofile: vm.imgProfile,
-					name: vm.accName
+					urlImage: vm.urlImage,
+					name: vm.accName,
+					pathUrl: vm.pathUrl
 				}				
 
 				$.ajax({
