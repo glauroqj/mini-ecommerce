@@ -181,6 +181,7 @@
 					vm.loadingImg = false;
 					vm.$toasted.show('Upload completo!');
 					$('#upImage').val('');
+					vm.$root.$emit('uploadImg', vm.urlImage);
 				});
 			},
 			removeImg: function(path) {

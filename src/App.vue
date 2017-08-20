@@ -57,6 +57,7 @@
     },
     mounted() {
       var vm = this;
+
       setTimeout(function() {
         vm.loadInitial()
       }, 250)

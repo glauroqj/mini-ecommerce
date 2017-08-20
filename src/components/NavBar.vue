@@ -79,7 +79,10 @@
 		},
 		mounted() {
 			var vm = this;
-			console.log();
+
+			this.$root.$on('uploadImg', function(urlImage) {
+				vm.photo = urlImage;
+			});
 		},
 		methods: {
 			loadDataAccount: function() {
