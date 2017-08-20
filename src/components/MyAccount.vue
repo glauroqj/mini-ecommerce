@@ -153,9 +153,7 @@
 			var vm = this;
 			setTimeout(function() {
 				vm.loadDataAccount();
-			}, 450)
-			console.log()
-
+			}, 450);
 		},
 		methods: {
 			reset: function() {

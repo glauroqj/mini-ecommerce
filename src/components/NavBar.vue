@@ -1,5 +1,5 @@
 <template lang="html">
-	<div v-if="shownavbar == true">
+	<div v-if="statusnavbar == true">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -46,7 +46,7 @@
 	export default {
 		name: 'navBar',
 		props: {
-			shownavbar: Boolean
+			statusnavbar: Boolean
 		},
 		components:{
 			'loading': loading
@@ -63,19 +63,23 @@
 			}
 		},
 		computed: {
-			isLoggedIn: function() {
-				return this.$store.getters.isLoggedIn
+			navbar: function() {
+				return this.$store.getters.statusnavbar
 			}
 		},
 		created() {
 		},
 		watch: {
-			'shownavbar': function() {
-				this.loadDataAccount();
+			'statusnavbar': function() {
+				var vm = this;
+				setTimeout(function() {
+					vm.loadDataAccount();
+				}, 50)
 			}
 		},
 		mounted() {
 			var vm = this;
+			console.log();
 		},
 		methods: {
 			loadDataAccount: function() {
@@ -112,7 +116,8 @@
 				this.$ls.set('show_name_user', false);
 				Firebase.auth().signOut();
 				this.$router.push('/');
-				this.$store.dispatch('logout');
+				this.$store.dispatch('hideNavbar');
+				this.$store.dispatch('menuHide');
 			},
 			getUser: function() {
 				var vm = this;

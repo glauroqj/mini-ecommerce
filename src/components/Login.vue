@@ -17,7 +17,7 @@
 									<label>Senha</label>
 									<input type="password" class="form-control" id="" v-model="password">
 								</div>
-								<button :class="{'disabled': email == '' && password == ''}" type="submit" class="btn btn-success" v-on:click="sendLogin()">entrar</button>
+								<button :disabled="email == '' && password == ''" type="submit" class="btn btn-success" v-on:click="sendLogin()">entrar</button>
 							</form>
 						</div>
 					</div>

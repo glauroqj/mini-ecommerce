@@ -61,6 +61,8 @@ const router = new VueRouter({
 
 
 /*store*/
+const SHOW_NAVBAR = 'SHOW_NAVBAR';
+const HIDE_NAVBAR = 'HIDE_NAVBAR';
 const LOGIN = 'LOGIN';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGOUT = 'LOGOUT';
@@ -69,9 +71,16 @@ const SHOW_MENU = 'SHOW_MENU'
 const store = new Vuex.Store({
 	state: {
 		isLoggedIn: !!localStorage.getItem('token'),
-		menuChange: ''
+		menuChange: '',
+		statusnavbar: false
 	},
 	mutations: {
+		[SHOW_NAVBAR] (state) {
+			state.statusnavbar = true;
+		},
+		[HIDE_NAVBAR] (state) {
+			state.statusnavbar = false;
+		},
 		[LOGIN] (state) {
 			state.pending = true;
 		},
@@ -90,6 +99,12 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		showNavbar({ commit }) {
+			commit(SHOW_NAVBAR);
+		},
+		hideNavbar({ commit }) {
+			commit(HIDE_NAVBAR);
+		},
 		login({ commit }, creds) {
 			commit(LOGIN); // show spinner
 			return new Promise(resolve => {
@@ -112,6 +127,9 @@ const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		statusnavbar: state => {
+			return state.statusnavbar
+		},
 		isLoggedIn: state => {
 			return state.isLoggedIn
 		},
