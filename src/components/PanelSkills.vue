@@ -10,30 +10,55 @@
 					<div class="form-group">
 						<label for="" class="col-lg-2 control-label">Linguagem</label>
 						<div class="box-skill">
-							<div class="col-lg-5">
+							<div class="col-lg-10">
 								<input type="text" class="form-control" id="" placeholder="html, css , js..." v-model="languageType">
 							</div>
-							<div class="col-lg-4">
-								<input type="text" class="form-control" id="" placeholder="imagem" v-model="languageImg">
-							</div>
-						</div>
-						<div class="col-lg-1">
-							<button class="btn btn-xs btn-success" :disabled="languageType == ''" v-on:click="insertLanguage()">+</button>
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<label for="" class="col-lg-2 control-label">URL</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" disabled="disabled" id="" placeholder="url imagem" v-model="urlImage">
+						</div>
+					</div>
+
+					<div class="form-group" v-if="urlImage == ''">
+						<label for="" class="col-lg-2 control-label">Inserir IMG</label>
+						<div class="col-lg-8">
+							<input type="file" class="form-control" id="upImage" v-on:change="loadImage">
+						</div>
+						<div class="col-xs-2">
+							<div v-if="loadingImg==true">
+								<loading :height="30" :width="30"></loading> {{porcentagem}}
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-6">
+							<button class="btn btn-sm btn-success" :disabled="languageType == ''" v-on:click="insertLanguage()">Adicionar Skill</button>
+						</div>
+					</div>
+
+					<div class="box-preview-img form-group" v-if="urlImage != ''">
+						<label for="" class="col-lg-2 control-label">Preview Imagem</label>
+						<div class="col-lg-8">
+							<img :src="urlImage" alt="" class="img-circle" style="height: 30px; width: auto">
+							<button type="button" :pathUrl="pathUrl" v-on:click="pathUrl = pathUrl" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#removeImg">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<div class="box-list col-xs-8">
 							<ul class="list-unstyled">
 								<li v-for="(item,index) in languages">
 									<span>
-										<img :src="item.img" :alt="item.img" class="list-img">
+										<img :src="item.urlImage" :alt="item.urlImage" class="list-img">
 									</span>
 									<span class="list-language">{{item.type}}</span> 
-									<span>
-										<button :index="index" class="btn btn-xs btn-danger" v-on:click="removeLanguage(index)">
-											<i class="fa fa-trash-o" aria-hidden="true"></i>
-										</button>
-									</span>
 								</li>
 							</ul>
 						</div>
@@ -56,7 +81,12 @@
 						<li>
 							<h5>Linguagens</h5>
 							<div v-for="item in info">	
-							<p><span v-if="item.img != ''"><img :src="item.img" :alt="item.img" class="list-img"></span> <span>{{item.type}}</span></p>
+								<p>
+									<span v-if="item.img != ''">
+										<img :src="item.urlImage" :alt="item.urlImage" class="list-img">
+									</span> 
+									<span>{{item.type}}</span>
+								</p>
 							</div>
 						</li>
 						<li>
@@ -88,6 +118,24 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="removeImg" tabindex="-1" role="dialog" aria-labelledby="removeImg">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Atenção</h4>
+					</div>
+					<div class="modal-body">
+						<h5>Deseja mesmo remover esta imagem?</h5>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Não</button>
+						<button type="button" :pathUrl="pathUrl" class="btn btn-danger btn-sm" v-on:click="removeImg(pathUrl)" data-dismiss="modal" aria-label="Close">Desejo remover</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </template>
 
@@ -102,15 +150,24 @@
 			return {
 				languages: [],
 				languageType: '',
-				languageImg: '',
+				urlImage: '',
 				edit: '',
 				editKey: '',
 				loading: true,
+				loadingImg: false,
+				urlImage: '',
+				pathUrl: '',
+				porcentagem: '',
+				bucket: '',
 				infos: {}
 			}
 		},
 		components:{
 			'loading': loading
+		},
+		created() {
+			const storageRef = Firebase.storage().ref();
+			this.bucket = storageRef;
 		},
 		mounted() {
 			var vm = this;
@@ -121,21 +178,56 @@
 		methods: {
 			reset: function() {
 				this.languageType = '';
-				this.languageImg = '';
 				this.editKey = ''
+				this.pathUrl = '';
+				this.urlImage = '';
+				this.porcentagem = '';
+			},
+			loadImage: function(e) {
+				var vm = this;
+				let file = e.target.files[0] || e.dataTransfer.files[0];
+				let uploadTask = this.bucket.child('skills/'+file.name).put(file);
+				uploadTask.on('state_changed', function(snapshot) {
+					console.log(snapshot)
+					vm.loadingImg = true;
+					vm.pathUrl = snapshot.ref.fullPath;
+					vm.porcentagem = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				}, function(error) {
+					vm.$toasted.show('Erro no upload :(');
+				}, function() {
+					vm.urlImage = uploadTask.snapshot.downloadURL;
+					vm.loadingImg = false;
+					vm.$toasted.show('Upload completo!');
+					$('#upImage').val('');
+				});
+			},
+			removeImg: function(path) {
+				var vm = this;
+				let deleteTask = this.bucket.child(path)
+				deleteTask.delete().then(function() {
+					vm.$toasted.show('Imagem deletada!');
+					vm.urlImage = '';
+					vm.pathUrl = '';
+				}).catch(function(error) {
+					vm.$toasted.show('Erro na remoção da imagem! :(');
+					vm.urlImage = '';
+					vm.pathUrl = '';
+				});
 			},
 			insertLanguage: function () {
 				let array = this.languages;
 				let data = {
 					type: this.languageType,
-					img: this.languageImg 
+					pathUrl: this.pathUrl,
+					urlImage: this.urlImage
 				}
 				array.push(data)
 				this.reset();
 			},
-			removeLanguage: function (index) {
+			removeLanguage: function (index, path) {
 				let array = this.languages;
-				array.splice(index, 1)
+				array.splice(index, 1);
+				this.removeImg(path);
 			},
 			removeInfo: function(index) {
 				var vm = this;			
@@ -148,6 +240,14 @@
 					vm.$toasted.show('Informações deletadas com sucesso!');
 					vm.loadDataInfo();
 					vm.edit = false;
+					/* delete folder */
+					let deleteTask = vm.bucket.child('skills');
+					console.log(deleteTask)
+					deleteTask.delete().then(function() {
+						vm.$toasted.show('Imagem deletada!');
+					}).catch(function(error) {
+						vm.$toasted.show('Erro ao deletar pasta! :(');
+					});
 					vm.reset();
 				})
 				.fail(function(xhr) {
