@@ -49,7 +49,7 @@
 					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-2">
 							<button v-show="edit == false" :disabled="accEmail == '' || accName == ''" type="submit" class="btn btn-primary" v-on:click="sendDataAccount()">Salvar</button>
-							<button v-show="edit == true" :editkey="editKey" :disabled="accEmail == '' || accName == ''" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
+							<button v-show="edit == true" :editkey="editKey" :disabled="accEmail == '' || accName == '' || urlImage == ''" type="submit" class="btn btn-warning" v-on:click="sendEditAccount(editKey)">Salvar alterações</button>
 						</div>
 					</div>
 				</form>

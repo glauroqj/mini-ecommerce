@@ -55,6 +55,10 @@
 		watch: {
 		},
 		mounted() {
+			var vm = this;
+			this.$root.$on('setRoute', function() {
+				vm.changeRoute();
+			});
 		},
 		methods: {
 			getRoute: function() {
@@ -62,6 +66,9 @@
 				setTimeout(function(){
 					vm.route = '#' + vm.$route.path;
 				}, 50)
+			},
+			changeRoute: function() {
+				this.route = '';
 			}
 		}
 	}

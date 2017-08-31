@@ -9,7 +9,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#/painel-de-controle">
+					<a class="navbar-brand" href="#/painel-de-controle" v-on:click="setRoute()">
 						Área Autenticada - {{ title }}
 					</a>
 				</div>
@@ -20,11 +20,11 @@
 							<loading :height="30" :width="30"></loading>
 						</li>
 						<li class="dropdown">
-							<a href="#/painel-de-controle" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img :src="photo" class="img-circle" style="height: 30px; width: auto"> <span class="caret"></span>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img :src="photo" class="img-circle" style="height: 30px; width: auto"> <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a class="disabled">{{name}}</a></li>
-								<li><a href="#/minha-conta">Minha Conta</a></li>
+								<li><a href="#/minha-conta" v-on:click="setRoute()">Minha Conta</a></li>
 								<li role="separator" class="divider"></li>
 								<li>
 									<a href="/" v-on:click="logout()">Sair</a>
@@ -85,6 +85,9 @@
 			});
 		},
 		methods: {
+			setRoute: function(route) {
+				this.$root.$emit('setRoute', route);
+			},
 			loadDataAccount: function() {
 				var vm = this;
 				vm.user = Firebase.auth().currentUser;
