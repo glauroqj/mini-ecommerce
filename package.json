@@ -2,7 +2,7 @@
   "name": "portfolio",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "Glauro Juliani <glauro.juliani@sympla.com.br>",
+  "author": "Glauro Juliani <glauro.juliani@hotmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
