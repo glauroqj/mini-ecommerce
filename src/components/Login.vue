@@ -8,7 +8,7 @@
 					</div>
 					<div class="panel-body">
 						<div class="">
-							<form v-on:submit.prevent>
+							<form v-on:submit.prevent autocomplete="on">
 								<div class="form-group">
 									<label>E-mail</label>
 									<input type="email" class="form-control" id="" v-model="email">

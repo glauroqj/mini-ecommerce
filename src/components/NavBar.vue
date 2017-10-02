@@ -1,5 +1,5 @@
 <template lang="html">
-	<div v-if="statusnavbar == true">
+	<div v-show="statusnavbar == true">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -68,21 +68,22 @@
 			}
 		},
 		created() {
+			this.$store.dispatch('showNavbar');
 		},
 		watch: {
 			'statusnavbar': function() {
 				var vm = this;
 				setTimeout(function() {
 					vm.loadDataAccount();
-				}, 50)
+				}, 50);
 			}
 		},
 		mounted() {
 			var vm = this;
-
 			this.$root.$on('uploadImg', function(urlImage) {
 				vm.photo = urlImage;
 			});
+			vm.loadDataAccount();
 		},
 		methods: {
 			setRoute: function(route) {

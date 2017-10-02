@@ -112,7 +112,7 @@ const store = new Vuex.Store({
 					localStorage.setItem('token', 'JWT');
 					commit(LOGIN_SUCCESS);
 					resolve();
-				}, 1000);
+				}, 800);
 			});
 		},
 		logout({ commit }) {
