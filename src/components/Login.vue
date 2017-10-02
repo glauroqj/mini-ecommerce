@@ -8,14 +8,14 @@
 					</div>
 					<div class="panel-body">
 						<div class="">
-							<form v-on:submit.prevent autocomplete="on">
+							<form method="post" autocomplete="on" v-on:submit.prevent>
 								<div class="form-group">
 									<label>E-mail</label>
-									<input type="email" class="form-control" id="" v-model="email">
+									<input type="email" name="Email" class="form-control" id="" v-model="email">
 								</div>
 								<div class="form-group">
 									<label>Senha</label>
-									<input type="password" class="form-control" id="" v-model="password">
+									<input type="password" name="Password" class="form-control" id="" v-model="password">
 								</div>
 								<button :disabled="email == '' && password == ''" type="submit" class="btn btn-success" v-on:click="sendLogin()">entrar</button>
 							</form>
